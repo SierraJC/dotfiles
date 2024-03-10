@@ -1,0 +1,17 @@
+[alias]
+resign = rebase --exec 'GIT_COMMITTER_DATE=\"$(git log -n 1 --format=%aD)\" git commit --amend --no-edit -n -S' -i
+
+[core]
+autocrlf = input
+excludesfile = ~/.gitignore_global
+editor = code --wait
+
+[init]
+defaultBranch = main
+
+[user]
+name = SierraJC
+email = 7351311+SierraJC@users.noreply.github.com
+
+[includeIf "gitdir/i:~/projects/personal/"]
+path = ~/projects/personal/.gitconfig

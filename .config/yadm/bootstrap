@@ -18,7 +18,7 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 # export XDG_DATA_HOME="${HOME}/.local/share"
 
 # Set Zsh configuration directory.
-export ZDOTDIR="${HOME}/.config/zsh"
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 # Set Vim configuration directory.
 # export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
 
@@ -176,12 +176,6 @@ install_pkgs() {
     fi
 }
 
-bootstrap_git() {
-    print_msg "Bootstrapping git..."
-    # symlink default global path to our yadm config
-    ln -sf ${XDG_CONFIG_HOME}/git/.gitconfig ${HOME}/.gitconfig
-}
-
 bootstrap_zsh() {
     print_msg "Bootstrapping Zsh..."
     # Array for Zsh configuration directory/files.
@@ -204,10 +198,8 @@ bootstrap_zsh() {
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="${HOME}/.config/zsh"' |
         sudo tee --append /etc/zsh/zshenv >/dev/null 2>&1
-}
-
-bootstrap_ohmyzsh() {
-    print_msg "Bootstrapping Oh My Zsh..."
+    # Install oh-my-zsh
+    print "Installing oh-my-zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
@@ -340,10 +332,8 @@ update_yadm_repo() {
 # EXECUTE FUNCTIONS ############################################################
 
 print_header
-install_pkgs
-bootstrap_git
+# install_pkgs
 bootstrap_zsh
-bootstrap_ohmyzsh
 # bootstrap_vim
 # install_fonts
 # cleanup_home
