@@ -31,6 +31,8 @@ export PIP_LOG_FILE="${XDG_DATA_HOME}/pip/log"
 # export XSERVERRC="${XDG_CONFIG_HOME}/X11/xserverrc"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export ZLIB="${ZDOTDIR}/lib"
+export ZSH_CUSTOM="${ZLIB}"
+
 # Check if Docker daemon is running in rootless mode.
 # docker_status=$(systemctl --user is-active docker 2>&1)
 # if [[ "$docker_status" == "active" ]]; then

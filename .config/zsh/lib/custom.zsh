@@ -10,6 +10,8 @@ if [ -d "$HOME/.local/bin" ]; then
   export PATH=$PATH:$HOME/.local/bin
 fi
 
+DEFAULT_USER=$(whoami)
+
 export SSH_SK_HELPER="/mnt/c/Program Files/OpenSSH/ssh-sk-helper.exe"
 
 source /etc/profile.d/golang_path.sh
@@ -33,8 +35,8 @@ export NVM_DIR="$HOME/.nvm"
 # fi
 
 ## Change prompt
-prompt_context() {
-  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)%n" # removed @%m (@hostname)
-  fi
-}
+# prompt_context() {
+#   if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+#     prompt_segment black default "a%a(a!a.a%a{a%aFa{yaealalaoawa}a%a}a.a)a%ana" # removed @%m (@hostname)
+#   fi
+# }
