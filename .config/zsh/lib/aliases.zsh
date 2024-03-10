@@ -1,4 +1,4 @@
-alias zshconfig="$EDITOR $ZLIB/custom.zsh"
+alias zshconfig="$EDITOR $ZLIB/1-custom.zsh"
 alias zshalias="$EDITOR $ZLIB/aliases.zsh"
 alias zshreload="source $ZDOTDIR/.zshrc"
 
@@ -36,9 +36,3 @@ alias untarb="tar -xvjf"
 alias untarx="tar -xvJf"
 
 alias update-ubuntu="sudo apt update && sudo apt upgrade && sudo apt autoremove"
-
-# Thefuck
-eval $(thefuck --alias)
-
-# GitHub Copilot CLI
-eval "$(github-copilot-cli alias -- "$0")"

@@ -34,9 +34,13 @@ export NVM_DIR="$HOME/.nvm"
 #   export PATH=$PATH:$HOME/go/bin
 # fi
 
-## Change prompt
-# prompt_context() {
-#   if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-#     prompt_segment black default "a%a(a!a.a%a{a%aFa{yaealalaoawa}a%a}a.a)a%ana" # removed @%m (@hostname)
-#   fi
-# }
+# Aliases that must load after PATH
+eval $(thefuck --alias)
+eval "$(github-copilot-cli alias -- "$0")"
+
+# Change prompt
+prompt_context() {
+  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment black default "%(!.%{%F{yellow}%}.)%n" # removed @%m (@hostname)
+  fi
+}
