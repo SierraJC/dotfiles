@@ -13,7 +13,7 @@ temp_file="$(mktemp -u)"
 temp_dir="$(mktemp -d)"
 
 # Set XDG directories.
-# export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CONFIG_HOME="${HOME}/.config"
 # export XDG_CACHE_HOME="${HOME}/.cache"
 # export XDG_DATA_HOME="${HOME}/.local/share"
 
@@ -43,12 +43,12 @@ no_color="\033[0m"
 
 # Array for package dependencies.
 pkg_list=("git"
-          "zsh"
-        #   "vim"
-          "curl"
-          "thefuck"
-          "tree"
-          "unzip")
+    "zsh"
+    #   "vim"
+    "curl"
+    "thefuck"
+    "tree"
+    "unzip")
 
 # FUNCTIONS ####################################################################
 
@@ -90,44 +90,47 @@ deb_install() {
     print_msg "Updating package database..."
     sudo apt update
     # Specify Debian/Ubuntu based distribution specific GVim package.
-    vim_gui_pkg="vim-gtk3"
-    install_vim
+    # vim_gui_pkg="vim-gtk3"
+    # install_vim
     # Remove 'thefuck' from pkg_list. Will be installed using pip instead.
-    pkg_list=("${pkg_list[@]/thefuck}")
+    pkg_list=("${pkg_list[@]/thefuck/}")
     print_msg "Installing package dependencies..."
     sudo apt install --yes "${pkg_list[@]}"
 }
 
-vim_options() {
-    echo -e "${yellow}
-  Options for Vim installation.${no_color}
-" >&1
-    echo -e "${yellow}  1)${white} Basic. Install standard Vim package.${no_color}" >&1
-    echo -e "${yellow}  2)${white} GUI. Install Vim with GTK3 GUI.${no_color}" >&1
-    echo
-}
+# vim_options() {
+#     echo -e "${yellow}
+#   Options for Vim installation.${no_color}
+# " >&1
+#     echo -e "${yellow}  1)${white} Basic. Install standard Vim package.${no_color}" >&1
+#     echo -e "${yellow}  2)${white} GUI. Install Vim with GTK3 GUI.${no_color}" >&1
+#     echo
+# }
 
-install_vim() {
-    # Check if Xorg display server is installed. If true, offer Vim installation
-    # options.
-    if [[ -e $(command -v Xorg) || -e $(command -v startx) ]]; then
-        vim_options
-        while [ -z "${vim_option}" ]; do
-            echo -en "${white}  Option${yellow} [1/2]${white}: ${no_color}"
-            read -r opt
-            echo
-            case "${opt}" in
-                [1]*) vim_option=1 ;;
-                [2]*) vim_option=2 ;;
-                *) echo -e "Invalid option '${opt}'." >&2; vim_options ;;
-            esac
-        done
-        if [ "${vim_option}" = 2 ]; then
-            # Replace standard Vim package with GTK3 GUI version.
-            pkg_list=("${pkg_list[@]/vim/$vim_gui_pkg}")
-        fi
-    fi
-}
+# install_vim() {
+#     # Check if Xorg display server is installed. If true, offer Vim installation
+#     # options.
+#     if [[ -e $(command -v Xorg) || -e $(command -v startx) ]]; then
+#         vim_options
+#         while [ -z "${vim_option}" ]; do
+#             echo -en "${white}  Option${yellow} [1/2]${white}: ${no_color}"
+#             read -r opt
+#             echo
+#             case "${opt}" in
+#             [1]*) vim_option=1 ;;
+#             [2]*) vim_option=2 ;;
+#             *)
+#                 echo -e "Invalid option '${opt}'." >&2
+#                 vim_options
+#                 ;;
+#             esac
+#         done
+#         if [ "${vim_option}" = 2 ]; then
+#             # Replace standard Vim package with GTK3 GUI version.
+#             pkg_list=("${pkg_list[@]/vim/$vim_gui_pkg}")
+#         fi
+#     fi
+# }
 
 # Only used on Debian/Ubuntu based distributions.
 install_thefuck() {
@@ -143,30 +146,30 @@ install_pkgs() {
         # shellcheck disable=SC1091
         [ -f "/etc/os-release" ] && source /etc/os-release
         case "${NAME}" in
-            *Ubuntu*)
-                print_msg "Operating system identified as '$NAME'.";
-                deb_install && install_thefuck
-                ;;
-            *Debian*)
-                print_msg "Operating system identified as '$NAME'.";
-                deb_install && install_thefuck
-                ;;
-            # *Mint*)
-            #     print_msg "Operating system identified as '$NAME'.";
-            #     deb_install && install_thefuck
-            #     ;;
-            # *neon*)
-            #     print_msg "Operating system identified as '$NAME'.";
-            #     deb_install && install_thefuck
-            #     ;;
-            # *Raspbian*)
-            #     print_msg "Operating system identified as '$NAME'.";
-            #     deb_install && install_thefuck
-            #     ;;
-            # *)
-                print_error "Unable to identify operating system! Could not install packages...";
-                exit 1
-                ;;
+        *Ubuntu*)
+            print_msg "Operating system identified as '$NAME'."
+            deb_install && install_thefuck
+            ;;
+        *Debian*)
+            print_msg "Operating system identified as '$NAME'."
+            deb_install && install_thefuck
+            ;;
+        # *Mint*)
+        #     print_msg "Operating system identified as '$NAME'.";
+        #     deb_install && install_thefuck
+        #     ;;
+        # *neon*)
+        #     print_msg "Operating system identified as '$NAME'.";
+        #     deb_install && install_thefuck
+        #     ;;
+        # *Raspbian*)
+        #     print_msg "Operating system identified as '$NAME'.";
+        #     deb_install && install_thefuck
+        #     ;;
+        *)
+            print_error "Unable to identify operating system! Could not install packages..."
+            exit 1
+            ;;
         esac
     else
         print_error "Unsupported operating system! Could not install packages..."
@@ -183,10 +186,10 @@ bootstrap_zsh() {
         [ -e "${HOME}/${file}" ] && rm -rf "${HOME:?}/${file}" >/dev/null 2>&1
     done
     # Create symlinks to Zsh configuration files. Apparently this is needed.
-    ln -sf "${ZDOTDIR}/zlogin"    "${ZDOTDIR}/.zlogin"
-    ln -sf "${ZDOTDIR}/zlogout"   "${ZDOTDIR}/.zlogout"
-    ln -sf "${ZDOTDIR}/zshenv"    "${ZDOTDIR}/.zshenv"
-    ln -sf "${ZDOTDIR}/zshrc"     "${ZDOTDIR}/.zshrc"
+    # echo ln -sf "${ZDOTDIR}/.zlogin" "${ZDOTDIR}/.zlogin"
+    # echo ln -sf "${ZDOTDIR}/.zlogout" "${ZDOTDIR}/.zlogout"
+    # echo ln -sf "${ZDOTDIR}/.zshenv" "${ZDOTDIR}/.zshenv"
+    # echo ln -sf "${ZDOTDIR}/.zshrc" "${ZDOTDIR}/.zshrc"
     print_msg "Set Zsh as default shell..."
     # Set default shell to Zsh.
     chsh -s "$(command -v zsh)"
@@ -194,8 +197,13 @@ bootstrap_zsh() {
     # Set path to Zsh configuration files (system-wide configuration). We want
     # to do this to avoid as many dotfiles as possible in user home directory.
     # shellcheck disable=SC2016
-    echo 'export ZDOTDIR="${HOME}/.config/zsh"' | \
-    sudo tee --append /etc/zsh/zshenv >/dev/null 2>&1
+    echo 'export ZDOTDIR="${HOME}/.config/zsh"' |
+        sudo tee --append /etc/zsh/zshenv >/dev/null 2>&1
+}
+
+bootstrap_ohmyzsh() {
+    print_msg "Bootstrapping Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 # bootstrap_vim() {
@@ -233,11 +241,20 @@ install_fonts() {
         read -r opt
         echo
         case "${opt}" in
-            [1]*) font_option=1 ;;
-            [2]*) font_option=2; font_name="SourceCodePro" font_dir="${XDG_DATA_HOME}/fonts/${font_name}" \
-                  font_dl_url="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/${font_name}.zip" ;;
-            [3]*) font_option=3; font_name="NerdFonts" font_dl_url="https://github.com/ryanoasis/nerd-fonts.git" ;;
-            *) echo -e "Invalid option '${opt}'." >&2; font_options ;;
+        [1]*) font_option=1 ;;
+        [2]*)
+            font_option=2
+            font_name="SourceCodePro" font_dir="${XDG_DATA_HOME}/fonts/${font_name}" \
+                font_dl_url="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/${font_name}.zip"
+            ;;
+        [3]*)
+            font_option=3
+            font_name="NerdFonts" font_dl_url="https://github.com/ryanoasis/nerd-fonts.git"
+            ;;
+        *)
+            echo -e "Invalid option '${opt}'." >&2
+            font_options
+            ;;
         esac
     done
     if [ "${font_option}" = 1 ]; then
@@ -272,15 +289,16 @@ cleanup_options() {
 
 cleanup_home() {
     # Array for common dotfiles.
-    dotfiles=(".bash_history" ".bash_logout" ".bash_profile" ".bashrc" \
-    ".dircolors" ".dir_colors" ".gconf" ".gitconfig" ".kde" ".kde4" ".lesshst" \
-    ".profile" ".vim" ".viminfo" ".vimrc" ".zlogin" ".zlogout" ".zprofile" \
-    ".zshenv" ".zshrc" ".wget-hsts")
+    dotfiles=(".bash_history" ".bash_logout" ".bash_profile" ".bashrc"
+        ".dircolors" ".dir_colors" ".gconf" ".gitconfig" ".kde" ".kde4" ".lesshst"
+        ".profile" ".vim" ".viminfo" ".vimrc" ".zlogin" ".zlogout" ".zprofile"
+        ".zshenv" ".zshrc" ".wget-hsts")
     found=0 # Set to 1 if file found in the for loop.
     # Find any pre-esisting dotfiles.
     for file in "${dotfiles[@]}"; do
         if [ -e "${HOME}/${file}" ]; then
-            found=1; break
+            found=1
+            break
         fi
     done
     # If true, offer to cleanup home directory.
@@ -291,9 +309,12 @@ cleanup_home() {
             read -r opt
             echo
             case "${opt}" in
-                [y]|[Y]*) cleanup_option=1 ;;
-                [n]|[N]*) cleanup_option=2 ;;
-                *) echo -e "Invalid option '${opt}'." >&2; cleanup_options ;;
+            [y] | [Y]*) cleanup_option=1 ;;
+            [n] | [N]*) cleanup_option=2 ;;
+            *)
+                echo -e "Invalid option '${opt}'." >&2
+                cleanup_options
+                ;;
             esac
         done
         if [ "${cleanup_option}" = 1 ]; then
@@ -314,11 +335,12 @@ update_yadm_repo() {
 # EXECUTE FUNCTIONS ############################################################
 
 print_header
-# install_pkgs
-# bootstrap_zsh
+install_pkgs
+bootstrap_zsh
+bootstrap_ohmyzsh
 # bootstrap_vim
 # install_fonts
 # cleanup_home
-# update_yadm_repo
+update_yadm_repo
 cleanup_tmp
 print_footer
