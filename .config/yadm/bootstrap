@@ -23,7 +23,7 @@ export ZDOTDIR="${HOME}/.config/zsh"
 # export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
 
 # Set user bin directory.
-# export USER_BIN_DIR="${HOME}/.local/bin"
+export USER_BIN_DIR="${HOME}/.local/bin"
 
 ## Colorize output.
 # shellcheck disable=SC2034
@@ -44,11 +44,8 @@ no_color="\033[0m"
 # Array for package dependencies.
 pkg_list=("git"
           "zsh"
-          "vim"
+        #   "vim"
           "curl"
-          "ranger"
-          "w3m"         # Optional dependency for 'ranger'.
-          "highlight"   # Optional dependency for 'ranger'.
           "thefuck"
           "tree"
           "unzip")
@@ -87,16 +84,6 @@ print_error() {
 
 cleanup_tmp() {
     rm -rf "${temp_file}" "${temp_dir}"
-}
-
-pac_install() {
-    print_msg "Updating package database..."
-    sudo pacman -Sy
-    # Specify Arch based distribution specific GVim package.
-    vim_gui_pkg="gvim"
-    install_vim
-    print_msg "Installing package dependencies..."
-    sudo pacman -S --noconfirm "${pkg_list[@]}"
 }
 
 deb_install() {
@@ -156,18 +143,6 @@ install_pkgs() {
         # shellcheck disable=SC1091
         [ -f "/etc/os-release" ] && source /etc/os-release
         case "${NAME}" in
-            *Arch*)
-                print_msg "Operating system identified as '$NAME'.";
-                pac_install
-                ;;
-            *Manjaro*)
-                print_msg "Operating system identified as '$NAME'.";
-                pac_install
-                ;;
-            *Chakra*)
-                print_msg "Operating system identified as '$NAME'.";
-                pac_install
-                ;;
             *Ubuntu*)
                 print_msg "Operating system identified as '$NAME'.";
                 deb_install && install_thefuck
@@ -176,19 +151,19 @@ install_pkgs() {
                 print_msg "Operating system identified as '$NAME'.";
                 deb_install && install_thefuck
                 ;;
-            *Mint*)
-                print_msg "Operating system identified as '$NAME'.";
-                deb_install && install_thefuck
-                ;;
-            *neon*)
-                print_msg "Operating system identified as '$NAME'.";
-                deb_install && install_thefuck
-                ;;
-            *Raspbian*)
-                print_msg "Operating system identified as '$NAME'.";
-                deb_install && install_thefuck
-                ;;
-            *)
+            # *Mint*)
+            #     print_msg "Operating system identified as '$NAME'.";
+            #     deb_install && install_thefuck
+            #     ;;
+            # *neon*)
+            #     print_msg "Operating system identified as '$NAME'.";
+            #     deb_install && install_thefuck
+            #     ;;
+            # *Raspbian*)
+            #     print_msg "Operating system identified as '$NAME'.";
+            #     deb_install && install_thefuck
+            #     ;;
+            # *)
                 print_error "Unable to identify operating system! Could not install packages...";
                 exit 1
                 ;;
@@ -223,23 +198,23 @@ bootstrap_zsh() {
     sudo tee --append /etc/zsh/zshenv >/dev/null 2>&1
 }
 
-bootstrap_vim() {
-    print_msg "Bootstrapping Vim..."
-    # Array for Vim configuration diretcory/files.
-    vim_dotfiles=(".vim" ".vimrc" ".viminfo")
-    # Delete default Vim configuration files if present.
-    for file in "${vim_dotfiles[@]}"; do
-        [ -e "${HOME}/${file}" ] && rm -rf "${HOME:?}/${file}" >/dev/null 2>&1
-    done
-    # Create viminfo file to avoid errors from startify plugin.
-    mkdir -p "${XDG_DATA_HOME}/vim" && touch "${XDG_DATA_HOME}/vim/viminfo"
-    print_msg "Installing vim-plug..."
-    # Install vim-plug and plugins.
-    [ ! -e "${XDG_CONFIG_HOME}/vim/autoload/plug.vim" ] && \
-    curl -fLo "${XDG_CONFIG_HOME}/vim/autoload/plug.vim" --create-dirs \
-    "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" --progress-bar && \
-    vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-}
+# bootstrap_vim() {
+#     print_msg "Bootstrapping Vim..."
+#     # Array for Vim configuration diretcory/files.
+#     vim_dotfiles=(".vim" ".vimrc" ".viminfo")
+#     # Delete default Vim configuration files if present.
+#     for file in "${vim_dotfiles[@]}"; do
+#         [ -e "${HOME}/${file}" ] && rm -rf "${HOME:?}/${file}" >/dev/null 2>&1
+#     done
+#     # Create viminfo file to avoid errors from startify plugin.
+#     mkdir -p "${XDG_DATA_HOME}/vim" && touch "${XDG_DATA_HOME}/vim/viminfo"
+#     print_msg "Installing vim-plug..."
+#     # Install vim-plug and plugins.
+#     [ ! -e "${XDG_CONFIG_HOME}/vim/autoload/plug.vim" ] && \
+#     curl -fLo "${XDG_CONFIG_HOME}/vim/autoload/plug.vim" --create-dirs \
+#     "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" --progress-bar && \
+#     vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+# }
 
 font_options() {
     echo -e "${yellow}
