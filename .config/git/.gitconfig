@@ -1,20 +1,17 @@
 [user]
 name = SierraJC
 email = 7351311+SierraJC@users.noreply.github.com
-signingkey = 464FEAD66F9DBC90
-
-[commit]
-gpgsign = true
 
 [includeIf "gitdir/i:~/projects/personal/"]
-path = ~/.config/git/personal.gitconfig
+path = ~/projects/personal/.gitconfig
 
 [core]
 autocrlf = input
-excludesfile = ~/.gitignore_global
+excludesfile = ~/.config/git/.gitignore_global
 editor = code --wait
 
 [alias]
 resign = rebase --exec 'GIT_COMMITTER_DATE=\"$(git log -n 1 --format=%aD)\" git commit --amend --no-edit -n -S' -i
+
 [init]
 defaultBranch = main

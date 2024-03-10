@@ -44,7 +44,6 @@ no_color="\033[0m"
 # Array for package dependencies.
 pkg_list=("git"
     "zsh"
-    #   "vim"
     "curl"
     "thefuck"
     "tree"
@@ -175,6 +174,12 @@ install_pkgs() {
         print_error "Unsupported operating system! Could not install packages..."
         exit 1
     fi
+}
+
+bootstrap_git() {
+    print_msg "Bootstrapping git..."
+    # symlink default global path to our yadm config
+    ln -sf ${XDG_CONFIG_HOME}/git/.gitconfig ${HOME}/.gitconfig
 }
 
 bootstrap_zsh() {
@@ -336,6 +341,7 @@ update_yadm_repo() {
 
 print_header
 install_pkgs
+bootstrap_git
 bootstrap_zsh
 bootstrap_ohmyzsh
 # bootstrap_vim
