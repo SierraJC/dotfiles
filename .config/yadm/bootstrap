@@ -198,9 +198,22 @@ bootstrap_zsh() {
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="${HOME}/.config/zsh"' |
         sudo tee --append /etc/zsh/zshenv >/dev/null 2>&1
+
     # Install oh-my-zsh
-    print "Installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    print_msg "Installing oh-my-zsh..."
+    [ ! -d "${HOME}/.oh-my-zsh" ] &&
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    bootstrap_zsh_plugins
+}
+
+bootstrap_zsh_plugins() {
+    ZSH_CUSTOM="${ZDOTDIR}/lib"
+    print_msg "Installing Zsh plugins..."
+
+    [ ! -d "${ZSH_CUSTOM}/plugins/zsh-autosuggestions" ] &&
+        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
 }
 
 # bootstrap_vim() {
@@ -332,7 +345,7 @@ update_yadm_repo() {
 # EXECUTE FUNCTIONS ############################################################
 
 print_header
-# install_pkgs
+install_pkgs
 bootstrap_zsh
 # bootstrap_vim
 # install_fonts
