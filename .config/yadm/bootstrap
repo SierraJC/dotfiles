@@ -350,6 +350,6 @@ bootstrap_zsh
 # bootstrap_vim
 # install_fonts
 # cleanup_home
-update_yadm_repo
+#update_yadm_repo
 cleanup_tmp
 print_footer
