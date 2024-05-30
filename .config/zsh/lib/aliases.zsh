@@ -36,4 +36,9 @@ alias untarb="tar -xvjf"
 # Untar xz.
 alias untarx="tar -xvJf"
 
+# Docker
+alias dc="docker compose"
+alias dcl="docker compose -f compose.local.yml"
+alias dcd="docker compose -f compose.dev.yml"
+
 alias update-ubuntu="sudo apt update && sudo apt upgrade && sudo apt autoremove"
