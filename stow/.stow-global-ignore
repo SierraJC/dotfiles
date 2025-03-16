@@ -8,6 +8,3 @@
 README.*
 TODO.*
 .*.secrets.*
-.gitconfig.local
-.zshrc.local
-.local.zsh

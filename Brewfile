@@ -1,0 +1,41 @@
+# Taps
+tap "homebrew/bundle"
+
+# Binaries
+brew 'git' # Version control
+brew 'zsh' # Z shell
+brew 'stow' # Symlink manager
+brew 'zoxide' # switch between most used directories
+brew 'htop' # prettier top
+brew 'jq' # JSON processor
+brew 'n' # Node version manager
+brew 'aider' # AI pair programmer
+brew 'gh' # GitHub CLI
+brew 'fzf' # Fuzzy finder
+brew 'obsidian' # Note-taking app
+brew 'gdrive' # Google Drive
+# brew 'mas' # Mac App Store installer cli
+
+# Applications
+cask 'spotify'
+cask 'firefox'
+cask 'docker'
+cask 'iterm2'
+cask 'visual-studio-code'
+
+# Fonts
+cask 'font-0xproto-nerd-font'
+cask 'font-cascadia-code'
+cask 'font-commit-mono'
+cask 'font-commit-mono-nerd-font'
+cask 'font-fira-code'
+cask 'font-fira-code-nerd-font'
+cask 'font-hack'
+cask 'font-hack-nerd-font'
+cask 'font-monaspace'
+cask 'font-monaspace-nerd-font'
+# cask 'font-meslo-lg-nerd-font'
+cask 'font-meslo-for-powerlevel10k'
+
+# Mac App Store
+# mas 'appname', id: 123456789
