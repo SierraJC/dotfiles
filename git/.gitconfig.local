@@ -1,0 +1,11 @@
+# local gitconfig
+#
+# [user]
+#   name = Your Name
+#   email = email@domain.com
+#   signingkey = qwertyuiop4567!
+# [commit]
+# 	gpgsign = true
+# [github]
+#   user = mygithubusername
+#   token = 12345678901234567890123456789012

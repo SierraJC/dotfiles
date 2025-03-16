@@ -1,0 +1,13 @@
+node_modules/
+.ssh/
+.vscode/*
+__debug_bin*
+.DS_Store
+
+# AI tools config
+.github/prompts/
+.github/copilot-instructions.md
+.sourcegraph/
+memory-bank/
+.clinerules*
+.aider.*
