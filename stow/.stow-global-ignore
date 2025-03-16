@@ -1,0 +1,13 @@
+.DS_Store
+.git
+.gitignore
+.stow-local-ignore
+.vscode
+.*.example
+^/@.*
+README.*
+TODO.*
+.*.secrets.*
+.gitconfig.local
+.zshrc.local
+.local.zsh
