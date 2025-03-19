@@ -14,7 +14,7 @@ fi
 
 # Update Homebrew recipes
 brew update
-brew bundle --file ./Brewfile
+brew bundle --file ./scripts/Brewfile
 # brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs brew install --cask
 
 brew cleanup

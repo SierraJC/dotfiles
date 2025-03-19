@@ -8,12 +8,11 @@ brew 'stow' # Symlink manager
 brew 'zoxide' # switch between most used directories
 brew 'htop' # prettier top
 brew 'jq' # JSON processor
-brew 'n' # Node version manager
-brew 'aider' # AI pair programmer
+# brew 'n' # Node version manager
+# brew 'aider' # AI pair programmer
 brew 'gh' # GitHub CLI
 brew 'fzf' # Fuzzy finder
-brew 'obsidian' # Note-taking app
-brew 'gdrive' # Google Drive
+# brew 'gdrive' # Google Drive
 # brew 'mas' # Mac App Store installer cli
 
 # Applications
@@ -22,6 +21,7 @@ cask 'firefox'
 cask 'docker'
 cask 'iterm2'
 cask 'visual-studio-code'
+cask 'obsidian' # Note-taking app
 
 # Fonts
 cask 'font-0xproto-nerd-font'
