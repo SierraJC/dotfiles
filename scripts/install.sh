@@ -44,7 +44,8 @@ if [ -z "$XDG_CONFIG_HOME" ]; then
   export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
-rm -rf "$HOME/.zshrc"
+mv "$HOME/.zshrc" "$HOME/.zshrc.old"
+mv "$HOME/.gitconfig" "$HOME/.gitconfig.old"
 
 # Double check that we're on macOS before continuing
 if ((isMac)); then
