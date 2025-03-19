@@ -16,6 +16,6 @@ To set up, assuming `git` is already installed:
 ```bash
 git clone https://github.com/sierrajc/dotfiles.git ~/.dotfiles
 cd $HOME/.dotfiles
-bash install.sh
+bash scripts/install.sh
 ```
 
