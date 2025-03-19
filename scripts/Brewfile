@@ -34,7 +34,6 @@ cask 'font-hack'
 cask 'font-hack-nerd-font'
 cask 'font-monaspace'
 cask 'font-monaspace-nerd-font'
-# cask 'font-meslo-lg-nerd-font'
 cask 'font-meslo-for-powerlevel10k'
 
 # Mac App Store

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Check for Homebrew and install if we don't have it
 if test ! $(which brew); then
