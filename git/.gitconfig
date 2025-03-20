@@ -17,5 +17,15 @@
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
 
+# Enforce SSH for GitHub
+[url "git@github.com:"]
+  pushInsteadOf = https://github.com/
+  pushInsteadOf = http://github.com/
+  pushInsteadOf = gh:
+  insteadOf = gh:
+  insteadOf = https://github.com/
+  insteadOf = http://github.com/
+  # pushInsteadOf = git://github.com/
+
 [include]
 	path = ~/.gitconfig.local
