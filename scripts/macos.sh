@@ -18,3 +18,16 @@ brew bundle --file ./scripts/Brewfile
 # brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs brew install --cask
 
 brew cleanup
+
+echo "Setting up iTerm2 preferences..."
+
+if [ -d "/Applications/iTerm.app" ]; then
+  # Specify the preferences directory
+  defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.config/iterm2"
+
+  # Tell iTerm2 to use the custom preferences in the directory
+  defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+  # Tell iTerm2 to save preferences automatically
+  defaults write com.googlecode.iterm2.plist "NoSyncNeverRemindPrefsChangesLostForFile_selection" -int 2
+fi

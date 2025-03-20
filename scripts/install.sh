@@ -44,9 +44,6 @@ if [ -z "$XDG_CONFIG_HOME" ]; then
   export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
-mv "$HOME/.zshrc" "$HOME/.zshrc.old"
-mv "$HOME/.gitconfig" "$HOME/.gitconfig.old"
-
 # Double check that we're on macOS before continuing
 if ((isMac)); then
   source "$SCRIPT_DIR/macos.sh"
@@ -55,21 +52,18 @@ elif ((isLinux)); then
 fi
 
 source "$SCRIPT_DIR/shell.sh"
-source "$SCRIPT_DIR/stow.sh"
 
-if ((isMac)); then
-  echo "Setting up iTerm2 preferences..."
-
-  if [ -d "/Applications/iTerm.app" ]; then
-    # Specify the preferences directory
-    defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.config/iterm2"
-
-    # Tell iTerm2 to use the custom preferences in the directory
-    defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
-
-    # Tell iTerm2 to save preferences automatically
-    defaults write com.googlecode.iterm2.plist "NoSyncNeverRemindPrefsChangesLostForFile_selection" -int 2
+# Clean up existing files that might conflict with stow
+files=(
+  ".zshrc"
+  ".gitconfig"
+)
+for file in "${files[@]}"; do
+  if [ -f "$HOME/$file" ]; then
+    mv "$HOME/$file" "$HOME/${file}.old"
   fi
-fi
+done
+
+source "$SCRIPT_DIR/stow.sh"
 
 # source ~/.zshrc
