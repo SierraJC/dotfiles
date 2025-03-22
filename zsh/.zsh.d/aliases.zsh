@@ -47,11 +47,16 @@ alias untarb="tar -xvjf"
 # Untar xz.
 alias untarx="tar -xvJf"
 
-backupfolder() { tar -zcvf "${1}_$(date '+%Y-%m-%d').tar.gz" "$1"; }
-
 alias update-ubuntu="sudo apt update && sudo apt upgrade && sudo apt autoremove"
 
 alias tf=terraform
 alias tg=terragrunt
 alias ap=ansible-playbook
 alias ans=ansible
+
+# GitHub Copilot CLI
+if command_exists gh && gh extension list | grep -q 'copilot'; then
+  eval "$(gh copilot alias -- zsh)"
+  alias "??"="ghcs" # suggest
+  alias "?"="ghce" # explain
+fi

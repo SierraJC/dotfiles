@@ -106,8 +106,10 @@ source $ZSH/oh-my-zsh.sh
 # Load custom configs
 ZSH_CONFIG_DIR="$HOME/.zsh.d"
 config_files=(
-  "exports.zsh"
   "functions.zsh"
+  "path.zsh"
+  "env.zsh"
+  "completion.zsh"
   "aliases.zsh"
   "aliases.local.zsh"
 )

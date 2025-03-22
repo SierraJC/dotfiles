@@ -8,14 +8,12 @@ if test ! $(which brew); then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  # echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Update Homebrew recipes
 brew update
 brew bundle --file ./scripts/Brewfile
-# brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs brew install --cask
 
 brew cleanup
 
