@@ -101,6 +101,9 @@ function install_gh() {
 
   sudo apt update
   sudo apt install gh -y
+
+  title "📦‍ Installing gh extensions"
+  gh extension install github/gh-copilot
 }
 
 function win_install_fonts() {

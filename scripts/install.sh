@@ -58,6 +58,15 @@ if [ -z "$XDG_CONFIG_HOME" ]; then
   export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
+# NOTE: Path must exist otherwise stow will symlink the entire ~/.local folder
+if [ -z "$XDG_DATA_HOME" ]; then
+  title "🏠 Setting up ~/.local/share directory"
+  if [ ! -d "${HOME}/.local/share" ]; then
+    mkdir -p "${HOME}/.local/share"
+  fi
+  export XDG_DATA_HOME="${HOME}/.local/share"
+fi
+
 # Double check that we're on macOS before continuing
 if ((isMac)); then
   source "$SCRIPT_DIR/macos.sh"
