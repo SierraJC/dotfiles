@@ -2,6 +2,24 @@
 
 set -e # Exit on any error
 
+bold=$(tput bold)
+reset=$(tput sgr0)
+
+title() {
+  echo "${bold}==> $1${reset}"
+  echo
+}
+
+warning() {
+  tput setaf 1
+  echo "/!\\ $1 /!\\"
+  tput sgr0
+}
+
+if [[ "$(uname -s)" != "Linux" ]]; then
+  exit 1
+fi
+
 if [[ "$(</proc/version)" == *[Mm]icrosoft* ]] 2>/dev/null; then
   readonly WSL=1
 else
@@ -10,6 +28,7 @@ fi
 
 # Install a bunch of debian packages.
 function install_packages() {
+  title "📦 Installing packages"
   local packages=(
     build-essential
     ca-certificates
@@ -24,7 +43,7 @@ function install_packages() {
     fzf    # Fuzzy finder
   )
 
-  if (( WSL )); then
+  if ((WSL)); then
     packages+=(wslu)
   else
     packages+=()
@@ -38,6 +57,7 @@ function install_packages() {
 }
 
 function install_docker() {
+  title "📦 Installing Docker"
   # if (( WSL )); then
   #   local release
   #   release="$(lsb_release -cs)"
@@ -69,14 +89,7 @@ function install_docker() {
 }
 
 function install_gh() {
-  # local v="2.68.1"
-  # ! command -v gh &>/dev/null || [[ "$(gh --version)" != */v"$v" ]] || return 0
-  # local deb
-  # deb="$(mktemp)"
-  # curl -fsSL "https://github.com/cli/cli/releases/download/v${v}/gh_${v}_linux_amd64.deb" > "$deb"
-  # sudo dpkg -i "$deb"
-  # rm "$deb"
-
+  title "📦 Installing GitHub CLI"
   sudo mkdir -p -m 755 /etc/apt/keyrings
 
   sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
@@ -113,6 +126,7 @@ function win_install_fonts() {
 # Install a decent monospace font.
 function install_fonts() {
   ((WSL)) || return 0
+  title "📦 Installing fonts"
   win_install_fonts ~/.local/share/fonts/NerdFonts/*.ttf
 }
 

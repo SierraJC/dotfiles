@@ -2,27 +2,41 @@
 
 set -e # Exit on any error
 
+bold=$(tput bold)
+reset=$(tput sgr0)
+
+title() {
+  echo "${bold}==> $1${reset}"
+  echo
+}
+
+warning() {
+  tput setaf 1
+  echo "/!\\ $1 /!\\"
+  tput sgr0
+}
+
 # Check if running as root
 if [ "$(id -u)" = "0" ]; then
-  echo "This script should not be run as root"
+  warning "This script should not be run as root"
   exit 1
 fi
 
 cd $HOME/.dotfiles || exit 1
 
-osname=$(uname) # "Linux" or "Darwin"
+osname=$(uname -s) # "Linux" or "Darwin"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$osname" = "Darwin" ]; then
   readonly isMac=1
   readonly isLinux=0
-  echo "Setting up Mac..."
+  title "🍎 Setting up Mac..."
 elif [ "$osname" = "Linux" ]; then
   readonly isMac=0
   readonly isLinux=1
-  echo "Setting up Linux..."
+  title "🐧 Setting up Linux..."
 else
-  echo "This script only supports Linux and macOS. Exiting..."
+  warning "This script only supports Linux and macOS. Exiting..."
   exit 1
 fi
 
@@ -37,7 +51,7 @@ while true; do
 done 2>/dev/null &
 
 if [ -z "$XDG_CONFIG_HOME" ]; then
-  echo "Setting up ~/.config directory..."
+  title "🏠 Setting up ~/.config directory"
   if [ ! -d "${HOME}/.config" ]; then
     mkdir -p "${HOME}/.config"
   fi
@@ -54,6 +68,8 @@ fi
 source "$SCRIPT_DIR/shell.sh"
 
 # Clean up existing files that might conflict with stow
+echo
+warning "Backing up existing files that might conflict with stow..."
 files=(
   ".zshrc"
   ".gitconfig"
@@ -65,5 +81,10 @@ for file in "${files[@]}"; do
 done
 
 source "$SCRIPT_DIR/stow.sh"
+
+# GitHub CLI: Authenticate with your GitHub account if the user is not logged in
+if command -v gh &>/dev/null && ! gh auth status &>/dev/null; then
+  echo "[GitHub CLI] You are not logged into any GitHub hosts. To log in, run: ${bold}gh auth login${reset}"
+fi
 
 # source ~/.zshrc
