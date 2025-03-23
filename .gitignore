@@ -1,3 +1,6 @@
 .env
 *.secrets.*
 !.aider*
+
+# Things that can copied due to stow folder symlinks
+**/.config/gh/hosts.yml
