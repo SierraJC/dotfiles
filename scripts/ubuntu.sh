@@ -127,7 +127,7 @@ function win_install_fonts() {
 function install_fonts() {
   ((WSL)) || return 0
   title "📦 Installing fonts"
-  win_install_fonts ~/.local/share/fonts/NerdFonts/*.ttf
+  win_install_fonts ~/.dotfiles/fonts/.local/share/fonts/NerdFonts/*.ttf
 }
 
 function install_locale() {

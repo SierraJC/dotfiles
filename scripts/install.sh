@@ -73,6 +73,7 @@ warning "Backing up existing files that might conflict with stow..."
 files=(
   ".zshrc"
   ".gitconfig"
+  ".config/gh/config.yml"
 )
 for file in "${files[@]}"; do
   if [ -f "$HOME/$file" ]; then
