@@ -1,17 +1,10 @@
-
-# XDG Base Directory Specification
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_STATE_HOME="$HOME/.local/state"
-
 # Encoding stuff for the terminal
 export LANGUAGE="en_AU.UTF-8"
 export LANG="$LANGUAGE"
 export LC_ALL="$LANGUAGE"
 export LC_CTYPE="$LANGUAGE"
 
-export DOTFILES="$HOME/dotfiles"
+export DOTFILES="$HOME/.dotfiles"
 export WORKSPACE="$HOME/dev"
 
 if command_exists code; then

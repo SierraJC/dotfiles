@@ -2,7 +2,7 @@ alias zshconfig="$EDITOR $ZSH_CONFIG_DIR/exports.zsh"
 alias zshalias="$EDITOR $ZSH_CONFIG_DIR/aliases.zsh $ZSH_CONFIG_DIR/aliases.local.zsh"
 alias zshreload="source $HOME/.zshrc"
 
-alias dotfiles='cd ~/.dotfiles'
+alias dotfiles="cd $DOTFILES"
 
 # Edit git config in vscode
 alias gcg="git config --edit --global"
