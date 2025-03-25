@@ -139,7 +139,7 @@ function install_locale() {
 }
 
 function fix_locale() {
-  sudo tee /etc/default/locale >/dev/null <<<'LC_ALL="C.UTF-8"'
+  sudo tee /etc/default/locale >/dev/null <<<'LC_ALL="en_AU.UTF-8"'
 }
 
 # Ensure no-write for group and others
