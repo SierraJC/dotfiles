@@ -10,3 +10,9 @@ command_exists fzf && eval "$(fzf --zsh)"
 
 # Not sure this is needed? called via plugin?
 # eval "$(zoxide init zsh)"
+
+command_exists uv && {
+  # Enable autocompletion for `uv` commands
+  eval "$(uv generate-shell-completion zsh)"
+  eval "$(uvx --generate-shell-completion zsh)"
+}
