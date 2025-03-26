@@ -120,7 +120,7 @@ for config_file in "${config_files[@]}"; do
 done
 
 # De-dupe $PATH
-# typeset -U path
+typeset -U path
 
 # Override with local settings
 source $HOME/.zshrc.local
