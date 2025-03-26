@@ -34,13 +34,14 @@ function install_packages() {
     ca-certificates
     curl
     wget
-    git    # Version control
-    zsh    # Z shell
-    stow   # Symlink manager
-    zoxide # switch between most used directories
-    htop   # prettier top
-    jq     # JSON processor
-    fzf    # Fuzzy finder
+    git     # Version control
+    zsh     # Z shell
+    stow    # Symlink manager
+    zoxide  # switch between most used directories
+    htop    # prettier top
+    jq      # JSON processor
+    fzf     # Fuzzy finder
+    fd-find # Better find
   )
 
   if ((WSL)); then
@@ -54,6 +55,9 @@ function install_packages() {
   sudo apt-get install -y "${packages[@]}"
   sudo apt-get autoremove -y
   sudo apt-get autoclean
+
+  # Create a symlink for fdfind to fd for compatibility
+  ln -s $(which fdfind) $HOME/.local/bin/fd
 }
 
 function install_docker() {
@@ -102,8 +106,9 @@ function install_gh() {
   sudo apt update
   sudo apt install gh -y
 
-  title "📦‍ Installing gh extensions"
-  gh extension install github/gh-copilot
+# cant do without gh login/token, ugh
+#  title "📦‍ Installing gh extensions"
+#  gh extension install github/gh-copilot
 }
 
 function win_install_fonts() {
