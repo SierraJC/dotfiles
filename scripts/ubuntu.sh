@@ -16,6 +16,11 @@ warning() {
   tput sgr0
 }
 
+ask() {
+    read -p "$1 (y/N) " response
+    [[ "$response" =~ ^[yY]$ ]]
+}
+
 if [[ "$(uname -s)" != "Linux" ]]; then
   exit 1
 fi
@@ -111,6 +116,23 @@ function install_gh() {
 #  gh extension install github/gh-copilot
 }
 
+function install_tenv() {
+  title "📦 Installing TENV (OpenTofu / Terraform / Terragrunt)"
+  tempFile=$(mktemp)
+  LATEST_VERSION=$(curl --silent https://api.github.com/repos/tofuutils/tenv/releases/latest | jq -r .tag_name)
+  curl -o "$tempFile" -L "https://github.com/tofuutils/tenv/releases/latest/download/tenv_${LATEST_VERSION}_amd64.deb"
+  sudo dpkg -i "$tempFile"
+  rm -f "$tempFile"
+  # tenv tf install latest
+}
+
+function install_ansible() {
+  title "📦 Installing Ansible"
+  sudo apt install software-properties-common
+  sudo add-apt-repository --yes --update ppa:ansible/ansible
+  sudo apt install ansible
+}
+
 function win_install_fonts() {
   local dst_dir
   dst_dir="$(cmd.exe /c 'echo %LOCALAPPDATA%\Microsoft\Windows\Fonts' 2>/dev/null | sed 's/\r$//')"
@@ -154,6 +176,8 @@ install_packages
 # install_locale
 install_docker
 install_gh
+ask "Install tenv?" && install_tenv
+ask "Install ansible?" && install_ansible
 install_fonts
 
 # fix_locale
