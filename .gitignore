@@ -1,6 +1,9 @@
 .env
 *.secrets.*
-!.aider*
 
-# Things that can copied due to stow folder symlinks
-**/.config/gh/hosts.yml
+# Ignore aider files, but not the stowed files folder
+.aider*
+!aider/**/.aider*
+
+# Can be copied due to stow folder symlinks
+gh/.config/gh/hosts.yml

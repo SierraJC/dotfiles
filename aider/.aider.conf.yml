@@ -1,0 +1,102 @@
+# Reference
+# https://github.com/Aider-AI/aider/blob/main/aider/website/assets/sample.aider.conf.yml
+
+# openai-api-key: not-needed
+openai-api-base: http://localhost:4141/
+# openai-api-base: http://localhost:4460/
+
+#################
+## Model settings:
+
+## Add a model alias (can be used multiple times)
+alias:
+  - "sonnet:openai/claude-3.7-sonnet"
+  - "sonnet-t:openai/claude-3.7-sonnet-thought"
+  - "flash-t:gemini/gemini-2.0-flash-thinking-exp"
+  - "flash:gemini/gemini-2.0-flash-exp"
+  - "pro:gemini/gemini-2.5-pro-exp-03-25"
+  - "o3:openai/o3-mini"
+  - "o1:openai/o1"
+  - "v3:deepseek/deepseek-chat"
+  - "r1:deepseek/deepseek-reasoner"
+
+# architect: true
+model: pro
+editor-model: pro
+weak-model: flash
+
+## Specify the edit format for the editor model (default: depends on editor model)
+# editor-edit-format: xxx
+## Set the reasoning_effort API parameter (default: not set)
+# reasoning-effort: xxx
+## Set the thinking token budget for models that support it (default: not set)
+# thinking-tokens: xxx
+
+## Specify read-only files
+read:
+  - "~/conventions/general.md"
+  # - "~/conventions/typescript.md"
+  # - "~/conventions/go.md"
+
+## Only work with models that have meta-data available (default: True)
+show-model-warnings: true
+# vim: false
+
+## Specify the language to use in the chat (default: None, uses system settings) - UNRELIABLE?!?
+chat-language: en
+
+## Enable/disable multi-line input mode with Meta-Enter to submit (default: False)
+# multiline: true
+
+## Specify which editor to use for the /editor command
+# editor: code --wait
+
+###################
+# Repomap settings:
+
+## Suggested number of tokens to use for repo map, use 0 to disable (default: 1024)
+map-tokens: 1024
+## Control how often the repo map is refreshed. Options: auto, always, files, manual (default: auto)
+# map-refresh: auto
+## Multiplier for map tokens when no files are specified (default: 2)
+# map-multiplier-no-files: true
+
+#################
+# Cache settings:
+
+## Enable caching of prompts (default: False)
+#cache-prompts: false
+
+## Number of times to ping at 5min intervals to keep prompt cache warm (default: 0)
+#cache-keepalive-pings: false
+
+##################
+# Output settings:
+
+## Use colors suitable for a dark terminal background (default: False)
+dark-mode: true
+
+###############
+# Git settings:
+
+## Enable/disable auto commit of LLM changes (default: True)
+auto-commits: false
+## Enable/disable commits when repo is found dirty (default: True)
+dirty-commits: false
+## Attribute aider code changes in the git author name (default: True)
+attribute-author: false
+## Attribute aider commits in the git committer name (default: True)
+attribute-committer: false
+## Only consider files in the current subtree of the git repository
+# subtree-only: true
+
+
+## Enable/disable watching files for ai coding comments (default: False)
+#watch-files: false
+
+analytics: false
+# analytics-disable: true
+
+# env-file: "~/.config/aider/.env"
+# model-settings-file: "~/.config/aider/.aider.model.settings.yml"
+# model-metadata-file: "~/.config/aider/.aider.model.metadata.json"
