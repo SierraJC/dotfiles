@@ -1,8 +1,8 @@
 # local gitconfig
 #
 #[user]
-#	name = Your Name
-#	email = email@domain.com
+#	name = SierraJC
+#	email = 7351311+SierraJC@users.noreply.github.com
 #	signingkey = ~/.ssh/git_sign.pub
 #
 #[gpg]
