@@ -1,4 +1,4 @@
-alias zshconfig="$EDITOR $ZSH_CONFIG_DIR/exports.zsh"
+alias zshconfig="$EDITOR $ZDOTDIR/.zshrc.local"
 alias zshalias="$EDITOR $ZSH_CONFIG_DIR/aliases.zsh $ZSH_CONFIG_DIR/aliases.local.zsh"
 alias zshreload="source $HOME/.zshrc"
 
@@ -7,6 +7,7 @@ alias dotfiles="cd $DOTFILES"
 # Edit git config in vscode
 alias gcg="git config --edit --global"
 alias gcl="git config --edit --local"
+alias gcgl="git config --edit --file $HOME/.gitconfig.local"
 
 alias grep='grep --color=auto'
 alias cls=clear
