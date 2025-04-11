@@ -22,7 +22,7 @@ alias:
 
 # architect: true
 model: pro
-editor-model: pro
+editor-model: flash
 weak-model: flash
 
 ## Specify the edit format for the editor model (default: depends on editor model)
