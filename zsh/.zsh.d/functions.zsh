@@ -3,10 +3,17 @@ mcd() {
   mkdir -p "${1}" && cd "${1}"
 }
 
-# Generate a random password of a given length, copy to clipboard
+# Generate a random password of a given length.
+# Copies to clipboard locally, prints to stdout in SSH sessions.
 genpass() {
   length="${1:-16}"
-  openssl rand -base64 $length | rev | cut -b 2- | rev | pbcopy >/dev/null 2>&1
+  password=$(openssl rand -base64 $length | rev | cut -b 2- | rev)
+  if [[ -n "$SSH_CONNECTION" ]] || [[ -n "$SSH_CLIENT" ]]; then
+    echo "$password"
+  else
+    echo "$password" | pbcopy >/dev/null 2>&1
+    echo "Password copied to clipboard."
+  fi
 }
 
 backupfolder() {
