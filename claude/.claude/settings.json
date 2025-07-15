@@ -1,0 +1,29 @@
+{
+  "cleanupPeriodDays": 90,
+  "includeCoAuthoredBy": true,
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "DISABLE_TELEMETRY": "true",
+    "DISABLE_ERROR_REPORTING": "true",
+    "DISABLE_BUG_COMMAND": "true",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "true"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(:(){ :|:& };:)",
+      "Bash(dd if=/dev/zero of=/dev/*)",
+      "Bash(mkfs.*)",
+      "Bash(> /dev/sda*)",
+      "Read(.*\/.env)",
+      "Read(.env)"
+    ]
+  },
+  "hooks": {}
+}

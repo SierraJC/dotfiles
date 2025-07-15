@@ -73,8 +73,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Use `zoxide` as `cd`
-ZOXIDE_CMD_OVERRIDE=cd
+# Use `zoxide` as `cd` (but not in Claude Code)
+if [[ -z "$CLAUDECODE" ]]; then
+  ZOXIDE_CMD_OVERRIDE=cd
+fi
 
 
 # For macOS, this must be set here instead of in exports due to plugins needing brew bins

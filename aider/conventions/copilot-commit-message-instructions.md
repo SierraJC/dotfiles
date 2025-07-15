@@ -8,8 +8,8 @@ Follow the Conventional Commits format strictly for commit messages. Use the str
 
 Guidelines:
 
-1. **Type and Scope**: Choose an appropriate type (e.g., `feat`, `fix`, `chore`, `refactor`) and optional scope to describe the affected module or feature. When referring a function, variable, or component name, always wrap it in a code quote, such as `MyComponent`.
-   Not everything is a `feat`! Use `feat` for new features that affect the user experience, `fix` for bug fixes, and `chore` for most tasks and maintenance tasks. Use `refactor` for code changes that neither fix a bug nor add a feature.
+1. **Type and Scope**: Choose an appropriate type (e.g., `feat`, `fix`, `chore`, `refactor`, `deps`) and optional scope to describe the affected module or feature. When referring a function, variable, or component name, always wrap it in a code quote, such as `MyComponent`.
+   Not everything is a `feat`! Use `feat` for new features that affect the user experience, `fix` for bug fixes, and `chore` for most tasks and maintenance tasks. Use `refactor` for code changes that neither fix a bug nor add a feature. Use `deps` when editing a dependency file like `package.json`, `go.mod`, etc.
 
 2. **Description**: Write a concise, informative description in the header; use backticks if referencing code, function/component names, or specific terms.
 

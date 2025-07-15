@@ -6,8 +6,10 @@ __debug_bin*
 
 # AI tools config
 .github/prompts/
+.github/instructions/
 .github/copilot-instructions.md
-.sourcegraph/
 memory-bank/
-.clinerules*
 .aider.*
+
+**/CLAUDE.local.md
+**/.claude/settings.local.json
