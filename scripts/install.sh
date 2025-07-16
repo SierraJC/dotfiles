@@ -73,6 +73,25 @@ done
 
 source "$SCRIPT_DIR/stow.sh"
 
+if ask "Configure git to ignore changes to *.local* files?"; then
+  title "⚙️ Configuring files with git assume-unchanged"
+  local_files=(
+    "zsh/.zshrc.local"
+    "zsh/.zsh.d/aliases.local.zsh"
+    "git/.gitconfig.local"
+  )
+
+  for file in "${local_files[@]}"; do
+    if [ -f "$file" ]; then
+      git update-index --assume-unchanged "$file" 2>/dev/null || true
+      echo "✓ Set assume-unchanged for $file"
+      # Note: Undo with --no-assume-unchanged
+      # List files marked as assume-unchanged
+      # git ls-files -v | grep '^h'
+    fi
+  done
+fi
+
 # GitHub CLI: Authenticate with your GitHub account if the user is not logged in
 if command -v gh &>/dev/null && ! gh auth status &>/dev/null; then
   echo "[GitHub CLI] You are not logged into any GitHub hosts. To log in, run: ${bold}gh auth login${reset}"
