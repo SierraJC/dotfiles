@@ -1,21 +1,5 @@
 #!/bin/bash
 
-set -e # Exit on any error
-
-bold=$(tput bold)
-reset=$(tput sgr0)
-
-title() {
-  echo "${bold}==> $1${reset}"
-  echo
-}
-
-warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
-}
-
 # Check if running as root
 if [ "$(id -u)" = "0" ]; then
   warning "This script should not be run as root"
@@ -24,16 +8,13 @@ fi
 
 cd $HOME/.dotfiles || exit 1
 
-osname=$(uname -s) # "Linux" or "Darwin"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if [ "$osname" = "Darwin" ]; then
-  readonly isMac=1
-  readonly isLinux=0
+source "$SCRIPT_DIR/common.sh"
+
+if ((isMac)); then
   title "🍎 Setting up Mac..."
-elif [ "$osname" = "Linux" ]; then
-  readonly isMac=0
-  readonly isLinux=1
+elif ((isLinux)); then
   title "🐧 Setting up Linux..."
 else
   warning "This script only supports Linux and macOS. Exiting..."

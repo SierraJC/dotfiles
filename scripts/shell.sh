@@ -1,20 +1,7 @@
 #!/bin/bash
 
-set -e # Exit on any error
-
-bold=$(tput bold)
-reset=$(tput sgr0)
-
-title() {
-  echo "${bold}==> $1${reset}"
-  echo
-}
-
-warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
-}
+# Source common utility functions
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
 clone_or_pull() {
   repo_url=$1

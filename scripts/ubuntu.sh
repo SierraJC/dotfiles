@@ -1,34 +1,10 @@
 #!/bin/bash
 
-set -e # Exit on any error
+# Source common utility functions
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
-bold=$(tput bold)
-reset=$(tput sgr0)
-
-title() {
-  echo "${bold}==> $1${reset}"
-  echo
-}
-
-warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
-}
-
-ask() {
-  read -p "$1 (y/N) " response
-  [[ "$response" =~ ^[yY]$ ]]
-}
-
-if [[ "$(uname -s)" != "Linux" ]]; then
+if ((!isLinux)); then
   exit 1
-fi
-
-if [[ "$(</proc/version)" == *[Mm]icrosoft* ]] 2>/dev/null; then
-  readonly WSL=1
-else
-  readonly WSL=0
 fi
 
 function get_github_latest_version() {
@@ -53,7 +29,7 @@ function install_packages() {
     fd-find # Better find
   )
 
-  if ((WSL)); then
+  if ((isWSL)); then
     packages+=(wslu)
   else
     packages+=()
@@ -71,7 +47,7 @@ function install_packages() {
 
 function install_docker() {
   title "📦 Installing Docker"
-  # if (( WSL )); then
+  # if (( isWSL )); then
   #   local release
   #   release="$(lsb_release -cs)"
   #   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -178,7 +154,7 @@ function win_install_fonts() {
 
 # Install a decent monospace font.
 function install_fonts() {
-  ((WSL)) || return 0
+  ((isWSL)) || return 0
   title "📦 Installing fonts"
   win_install_fonts ~/.dotfiles/fonts/.local/share/fonts/NerdFonts/*.ttf
 }

@@ -1,22 +1,9 @@
 #!/bin/bash
 
-set -e # Exit on any error
+# Source common utility functions
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
-bold=$(tput bold)
-reset=$(tput sgr0)
-
-title() {
-  echo "${bold}==> $1${reset}"
-  echo
-}
-
-warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
-}
-
-if [[ "$(uname -s)" != "Darwin" ]]; then
+if ((!isMac)); then
   exit 1
 fi
 
