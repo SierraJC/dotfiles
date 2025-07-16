@@ -17,8 +17,8 @@ warning() {
 }
 
 ask() {
-    read -p "$1 (y/N) " response
-    [[ "$response" =~ ^[yY]$ ]]
+  read -p "$1 (y/N) " response
+  [[ "$response" =~ ^[yY]$ ]]
 }
 
 if [[ "$(uname -s)" != "Linux" ]]; then
@@ -30,6 +30,11 @@ if [[ "$(</proc/version)" == *[Mm]icrosoft* ]] 2>/dev/null; then
 else
   readonly WSL=0
 fi
+
+function get_github_latest_version() {
+  local repo="$1"
+  curl --silent "https://api.github.com/repos/${repo}/releases/latest" | jq -r .tag_name
+}
 
 # Install a bunch of debian packages.
 function install_packages() {
@@ -45,7 +50,6 @@ function install_packages() {
     zoxide  # switch between most used directories
     htop    # prettier top
     jq      # JSON processor
-    fzf     # Fuzzy finder
     fd-find # Better find
   )
 
@@ -111,18 +115,37 @@ function install_gh() {
   sudo apt update
   sudo apt install gh -y
 
-# cant do without gh login/token, ugh
-#  title "📦‍ Installing gh extensions"
-#  gh extension install github/gh-copilot
+  # cant do without gh login/token, ugh
+  #  title "📦‍ Installing gh extensions"
+  #  gh extension install github/gh-copilot
+}
+
+function install_fzf() {
+  title "📦 Installing fzf from GitHub"
+
+  # Get latest release version and strip 'v' prefix if present
+  local latest_version
+  latest_version=$(get_github_latest_version "junegunn/fzf" | sed 's/^v//')
+
+  # Download and extract fzf binary
+  local temp_dir
+  temp_dir=$(mktemp -d)
+  curl -L "https://github.com/junegunn/fzf/releases/download/v${latest_version}/fzf-${latest_version}-linux_amd64.tar.gz" | tar -xz -C "$temp_dir"
+
+  # Install to ~/.local/bin
+  mkdir -p "$HOME/.local/bin"
+  mv "$temp_dir/fzf" "$HOME/.local/bin/"
+  chmod +x "$HOME/.local/bin/fzf"
+  rm -rf "$temp_dir"
 }
 
 function install_tenv() {
   title "📦 Installing TENV (OpenTofu / Terraform / Terragrunt)"
-  tempFile=$(mktemp)
-  LATEST_VERSION=$(curl --silent https://api.github.com/repos/tofuutils/tenv/releases/latest | jq -r .tag_name)
-  curl -o "$tempFile" -L "https://github.com/tofuutils/tenv/releases/latest/download/tenv_${LATEST_VERSION}_amd64.deb"
-  sudo dpkg -i "$tempFile"
-  rm -f "$tempFile"
+  temp_file=$(mktemp)
+  latest_version=$(get_github_latest_version "tofuutils/tenv")
+  curl -o "$temp_file" -L "https://github.com/tofuutils/tenv/releases/latest/download/tenv_${latest_version}_amd64.deb"
+  sudo dpkg -i "$temp_file"
+  rm -f "$temp_file"
   # tenv tf install latest
 }
 
@@ -176,6 +199,7 @@ install_packages
 # install_locale
 install_docker
 install_gh
+install_fzf
 ask "Install tenv?" && install_tenv
 ask "Install ansible?" && install_ansible
 install_fonts
