@@ -8,13 +8,15 @@
     "DISABLE_BUG_COMMAND": "true",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "true"
   },
-  "includeCoAuthoredBy": true,
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(find:*)",
       "Bash(rg:*)",
       "Bash(grep:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr view:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -26,9 +28,9 @@
       "Read(.env)"
     ]
   },
+  "model": "opusplan",
+  "hooks": {},
   "feedbackSurveyState": {
     "lastShownTime": 1754027380709
   },
-  "model": "",
-  "hooks": {}
 }
