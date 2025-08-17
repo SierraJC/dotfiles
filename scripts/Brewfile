@@ -13,6 +13,7 @@ brew 'jq' # JSON processor
 brew 'gh' # GitHub CLI
 brew 'fzf' # Fuzzy finder
 brew 'fd' # Better find
+brew 'rg' # Better grep
 # brew 'gdrive' # Google Drive
 # brew 'mas' # Mac App Store installer cli
 

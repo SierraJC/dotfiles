@@ -27,6 +27,7 @@ function install_packages() {
     htop    # prettier top
     jq      # JSON processor
     fd-find # Better find
+    ripgrep # Better grep
   )
 
   if ((isWSL)); then
