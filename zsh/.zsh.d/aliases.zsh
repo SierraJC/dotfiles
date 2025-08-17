@@ -61,3 +61,8 @@ if command_exists gh && gh extension list | grep -q 'copilot'; then
   alias "??"="ghcs" # suggest
   alias "?"="ghce" # explain
 fi
+
+# Claude Code
+if command_exists claude; then
+  alias claude="claude --verbose --mcp-config ~/.claude/.mcp.json"
+fi

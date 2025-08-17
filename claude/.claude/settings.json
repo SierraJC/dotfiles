@@ -25,7 +25,9 @@
       "Bash(mkfs.*)",
       "Bash(> /dev/sda*)",
       "Read(*/.env)",
-      "Read(.env)"
+      "Read(.env)",
+      "NotebookRead",
+      "NotebookEdit"
     ]
   },
   "model": "opusplan",
