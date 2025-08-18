@@ -63,7 +63,7 @@ if command_exists gh && gh extension list | grep -q 'copilot'; then
 fi
 
 # Claude Code
-local claude_params="--mcp-config $HOME/.claude/.mcp.json --verbose"
+local claude_params="--mcp-config=\"$HOME/.claude/.mcp.json\" --mcp-config=\"$HOME/.claude/.mcp.local.json\""
 if file_exists $HOME/.claude/local/claude; then
   alias claude="$HOME/.claude/local/claude $claude_params"
 elif command_exists claude; then

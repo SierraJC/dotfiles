@@ -79,6 +79,7 @@ if ask "Configure git to ignore changes to *.local* files?"; then
     "zsh/.zshrc.local"
     "zsh/.zsh.d/aliases.local.zsh"
     "git/.gitconfig.local"
+    "claude/.claude/.mcp.local.json"
   )
 
   for file in "${local_files[@]}"; do
