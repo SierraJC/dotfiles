@@ -8,9 +8,15 @@ alias dotfiles="cd $DOTFILES"
 alias gcg="git config --edit --global"
 alias gcl="git config --edit --local"
 alias gcgl="git config --edit --file $HOME/.gitconfig.local"
+alias gig="$EDITOR ~/.gitignore_global"
 
 alias grep='grep --color=auto'
 alias cls=clear
+
+# tmux
+alias tn="tmux new-session -As"
+alias tl="tmux list-sessions"
+alias ta="tmux attach-session"
 
 # Docker
 alias dc="docker compose"

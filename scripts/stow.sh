@@ -7,6 +7,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 dirs_to_create=(
   "$HOME/.config/gh"
   "$HOME/.config/iterm2"
+  "$HOME/.config/tmux"
   "$HOME/.claude"
 )
 
