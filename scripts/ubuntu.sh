@@ -116,6 +116,25 @@ function install_fzf() {
   rm -rf "$temp_dir"
 }
 
+function install_yazi() {
+  title "📦 Installing yazi from GitHub"
+
+  # Get latest release version and strip 'v' prefix if present
+  local latest_version
+  latest_version=$(get_github_latest_version "sxyazi/yazi" | sed 's/^v//')
+
+  # Download and extract binary
+  local temp_dir
+  temp_dir=$(mktemp -d)
+  curl -L "https://github.com/sxyazi/yazi/releases/download/v${latest_version}/yazi-x86_64-unknown-linux-gnu.tar.gz" | tar -xz -C "$temp_dir"
+
+  # Install to ~/.local/bin
+  mkdir -p "$HOME/.local/bin"
+  mv "$temp_dir/yazi-x86_64-unknown-linux-gnu/yazi" "$HOME/.local/bin/"
+  chmod +x "$HOME/.local/bin/yazi"
+  rm -rf "$temp_dir"
+}
+
 function install_tenv() {
   title "📦 Installing TENV (OpenTofu / Terraform / Terragrunt)"
   temp_file=$(mktemp)
@@ -177,6 +196,7 @@ install_packages
 install_docker
 install_gh
 install_fzf
+install_yazi
 ask "Install tenv?" && install_tenv
 ask "Install ansible?" && install_ansible
 install_fonts
