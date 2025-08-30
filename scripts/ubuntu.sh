@@ -133,6 +133,9 @@ function install_yazi() {
   mv "$temp_dir/yazi-x86_64-unknown-linux-gnu/yazi" "$HOME/.local/bin/"
   chmod +x "$HOME/.local/bin/yazi"
   rm -rf "$temp_dir"
+
+  # Install theme via yazi cli
+  ya pkg add yazi-rs/flavors:catppuccin-mocha
 }
 
 function install_tenv() {

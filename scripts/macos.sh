@@ -22,6 +22,9 @@ brew bundle --file ./scripts/Brewfile
 
 brew cleanup
 
+# Install yazi theme
+ya pkg add yazi-rs/flavors:catppuccin-mocha
+
 if [ -d "/Applications/iTerm.app" ]; then
   title "Setting up iTerm2 preferences"
   # Specify the preferences directory
