@@ -1,5 +1,13 @@
 # Development Guidelines for Claude
 
+## Tooling
+
+The `gh` cli is installed on the system and should be used for all GitHub interactions, such as:
+
+- Fetching issues (https://github.com/<repo>/issues/<issue-number>)
+- Creating pull requests
+- Commenting on issues and pull requests
+
 ## Core Philosophy
 
 I follow a development philosophy centered on creating clean, maintainable, and robust code. This is achieved through a strong emphasis on functional programming principles, type safety, and schema-first design. All work should be done in small, incremental changes that maintain a working state throughout development.
