@@ -20,9 +20,9 @@
     ],
     "deny": [
       "Bash(rm -rf /)",
-      "Bash(:(){ :|:& };:)",
+      "Bash(:\\(\\){ :|:& };:)",
       "Bash(dd if=/dev/zero of=/dev/*)",
-      "Bash(mkfs.*)",
+      "Bash(mkfs:*)",
       "Bash(> /dev/sda*)",
       "Read(*/.env)",
       "Read(.env)",
@@ -30,8 +30,7 @@
       "NotebookEdit"
     ]
   },
-  "model": "opusplan",
-  "hooks": {},
+  "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754027380709
   }
