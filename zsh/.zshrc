@@ -78,13 +78,6 @@ if [[ -z "$CLAUDECODE" ]]; then
   ZOXIDE_CMD_OVERRIDE=cd
 fi
 
-
-# For macOS, this must be set here instead of in exports due to plugins needing brew bins
-[ -f "/opt/homebrew/bin/brew" ] && {
-  export HOMEBREW_NO_ANALYTICS=1
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-}
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/

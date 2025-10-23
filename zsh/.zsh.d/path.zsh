@@ -1,6 +1,3 @@
-export PATH=$PATH:/usr/local/bin
-export PATH=$PATH:$HOME/.local/bin:$HOME/bin
-
 # WSL
 # export SSH_SK_HELPER="/mnt/c/Program Files/OpenSSH/ssh-sk-helper.exe"
 
