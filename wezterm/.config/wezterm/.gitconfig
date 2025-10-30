@@ -1,0 +1,3 @@
+# Silly way of overriding the global rule :)
+[url "https://github.com/"]
+    insteadOf = https://github.com/

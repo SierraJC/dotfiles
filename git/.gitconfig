@@ -17,6 +17,9 @@
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
 
+[includeIf "gitdir:~/Library/Application Support/wezterm/plugins/"]
+    path = ~/.config/wezterm/.gitconfig
+
 # Enforce SSH for GitHub
 [url "git@github.com:"]
   pushInsteadOf = https://github.com/

@@ -23,6 +23,7 @@ cask 'spotify'
 cask 'firefox'
 cask 'docker'
 cask 'iterm2'
+cask 'wezterm'
 cask 'visual-studio-code'
 cask 'obsidian' # Note-taking app
 
