@@ -2,6 +2,7 @@
 mcd() {
   mkdir -p "${1}" && cd "${1}"
 }
+alias mkcd=mcd
 
 # Generate a random password of a given length.
 # Copies to clipboard locally, prints to stdout in SSH sessions.
@@ -36,4 +37,33 @@ dir_exists() {
 # dd f=/dev/random of="$1"
 shredd() {
   shred -v -n 1 -z -u "$1"
+}
+
+tempe() {
+  cd "$(mktemp -d)"
+  chmod -R 700 .
+  if [[ $# -eq 1 ]]; then
+    \mkdir -p "$1"
+    cd "$1"
+    chmod -R 700 .
+  fi
+}
+
+mksh() {
+  if [ ! $# -eq 1 ]; then
+    echo 'mksh takes one argument' 1>&2
+    exit 1
+  elif [ -e "$1" ]; then
+    echo "$1 already exists" 1>&2
+    exit 1
+  fi
+
+  echo '#!/usr/bin/env bash
+set -euo pipefail
+
+' > "$1"
+
+  chmod u+x "$1"
+
+  "$EDITOR" "$1"
 }
