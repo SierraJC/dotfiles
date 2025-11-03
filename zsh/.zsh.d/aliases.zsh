@@ -12,6 +12,7 @@ alias gig="$EDITOR ~/.gitignore_global"
 
 alias grep='grep --color=auto'
 alias cls=clear
+alias q=exit
 
 # tmux
 alias tn="tmux new-session -As"

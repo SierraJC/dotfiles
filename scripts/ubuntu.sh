@@ -28,6 +28,7 @@ function install_packages() {
     jq      # JSON processor
     fd-find # Better find
     ripgrep # Better grep
+    unzip   # Archive extraction
   )
 
   if ((isWSL)); then
@@ -43,7 +44,7 @@ function install_packages() {
   sudo apt-get autoclean
 
   # Create a symlink for fdfind to fd for compatibility
-  ln -s $(which fdfind) $HOME/.local/bin/fd
+  ln -sf $(which fdfind) $HOME/.local/bin/fd
 }
 
 function install_docker() {
@@ -101,12 +102,10 @@ function install_fzf() {
   title "📦 Installing fzf from GitHub"
 
   # Get latest release version and strip 'v' prefix if present
-  local latest_version
-  latest_version=$(get_github_latest_version "junegunn/fzf" | sed 's/^v//')
+  local latest_version=$(get_github_latest_version "junegunn/fzf" | sed 's/^v//')
 
   # Download and extract fzf binary
-  local temp_dir
-  temp_dir=$(mktemp -d)
+  local temp_dir=$(mktemp -d)
   curl -L "https://github.com/junegunn/fzf/releases/download/v${latest_version}/fzf-${latest_version}-linux_amd64.tar.gz" | tar -xz -C "$temp_dir"
 
   # Install to ~/.local/bin
@@ -120,22 +119,21 @@ function install_yazi() {
   title "📦 Installing yazi from GitHub"
 
   # Get latest release version and strip 'v' prefix if present
-  local latest_version
-  latest_version=$(get_github_latest_version "sxyazi/yazi" | sed 's/^v//')
+  local latest_version=$(get_github_latest_version "sxyazi/yazi" | sed 's/^v//')
 
   # Download and extract binary
-  local temp_dir
-  temp_dir=$(mktemp -d)
-  curl -L "https://github.com/sxyazi/yazi/releases/download/v${latest_version}/yazi-x86_64-unknown-linux-gnu.tar.gz" | tar -xz -C "$temp_dir"
+  local temp_dir=$(mktemp -d)
+  curl -L "https://github.com/sxyazi/yazi/releases/download/v${latest_version}/yazi-x86_64-unknown-linux-gnu.zip" -o "$temp_dir/yazi.zip"
+  unzip -q "$temp_dir/yazi.zip" -d "$temp_dir"
 
   # Install to ~/.local/bin
   mkdir -p "$HOME/.local/bin"
-  mv "$temp_dir/yazi-x86_64-unknown-linux-gnu/yazi" "$HOME/.local/bin/"
-  chmod +x "$HOME/.local/bin/yazi"
+  mv "$temp_dir/yazi-x86_64-unknown-linux-gnu/"{yazi,ya} "$HOME/.local/bin/"
+  chmod +x "$HOME/.local/bin/"{yazi,ya}
   rm -rf "$temp_dir"
 
   # Install theme via yazi cli
-  ya pkg add yazi-rs/flavors:catppuccin-mocha
+  ya pkg add yazi-rs/flavors:catppuccin-mocha || true
 }
 
 function install_tenv() {
