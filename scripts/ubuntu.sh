@@ -162,6 +162,13 @@ function install_ansible() {
   sudo apt install ansible
 }
 
+function install_fish() {
+  title "📦 Installing Fish Shell"
+  sudo apt-add-repository --yes ppa:fish-shell/release-4
+  sudo apt update
+  sudo apt install -y fish
+}
+
 function win_install_fonts() {
   local dst_dir
   dst_dir="$(cmd.exe /c 'echo %LOCALAPPDATA%\Microsoft\Windows\Fonts' 2>/dev/null | sed 's/\r$//')"
@@ -208,6 +215,7 @@ install_gh
 install_fzf
 install_yazi
 install_delta
+ask "Install fish shell?" && install_fish
 ask "Install tenv?" && install_tenv
 ask "Install ansible?" && install_ansible
 install_fonts

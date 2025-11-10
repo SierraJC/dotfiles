@@ -23,6 +23,10 @@ local function debug_log_print()
 end
 debug_log_print()
 
+if constants.is_macos then
+	config.default_prog = { '/opt/homebrew/bin/fish', '--login', '--interactive' }
+end
+
 config.max_fps = constants.is_macos and 120 or 144
 config.prefer_egl = true
 

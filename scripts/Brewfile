@@ -4,6 +4,7 @@ tap "homebrew/bundle"
 # Binaries
 brew 'git' # Version control
 brew 'zsh' # Z shell
+brew 'fish' # Friendly Interactive SHell (non-POSIX alternative to bash/zsh)
 brew 'stow' # Symlink manager
 brew 'zoxide' # switch between most used directories
 brew 'htop' # prettier top
