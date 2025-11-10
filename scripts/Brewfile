@@ -9,12 +9,12 @@ brew 'zoxide' # switch between most used directories
 brew 'htop' # prettier top
 brew 'jq' # JSON processor
 # brew 'n' # Node version manager
-# brew 'aider' # AI pair programmer
 brew 'gh' # GitHub CLI
 brew 'fzf' # Fuzzy finder
 brew 'fd' # Better find
 brew 'rg' # Better grep
 brew 'yazi' # Terminal file manager
+brew 'git-delta' # Better git diffs
 # brew 'gdrive' # Google Drive
 # brew 'mas' # Mac App Store installer cli
 

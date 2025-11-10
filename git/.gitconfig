@@ -2,6 +2,24 @@
 	autocrlf = input
 	editor = code --wait
 	excludesfile = ~/.gitignore_global
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[diff]
+	colorMoved = default
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	# dark = true      # or light = true, or omit for auto-detection
+	side-by-side = true # show diffs side by side
+	line-numbers = true  # show line numbers
+	hyperlinks = true
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+
+[merge]
+	conflictStyle = zdiff3
 
 [init]
 	defaultBranch = main

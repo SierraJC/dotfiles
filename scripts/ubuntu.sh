@@ -136,6 +136,15 @@ function install_yazi() {
   ya pkg add yazi-rs/flavors:catppuccin-mocha || true
 }
 
+function install_delta() {
+  title "📦 Installing Delta (git diff tool)"
+  temp_file=$(mktemp)
+  latest_version=$(get_github_latest_version "dandavison/delta")
+  curl -o "$temp_file" -L "https://github.com/dandavison/delta/releases/download/${latest_version}/git-delta_${latest_version}_amd64.deb"
+  sudo dpkg -i "$temp_file"
+  rm -f "$temp_file"
+}
+
 function install_tenv() {
   title "📦 Installing TENV (OpenTofu / Terraform / Terragrunt)"
   temp_file=$(mktemp)
@@ -198,6 +207,7 @@ install_docker
 install_gh
 install_fzf
 install_yazi
+install_delta
 ask "Install tenv?" && install_tenv
 ask "Install ansible?" && install_ansible
 install_fonts
