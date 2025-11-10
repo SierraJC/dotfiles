@@ -12,9 +12,9 @@ after-login-command = []
 after-startup-command = [
   # 'exec-and-forget sketchybar',
   # 'exec-and-forget sketchybar --hotreload true',
-  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+  # 'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
   # Start AutoRaise for focus-follows-mouse functionality
-  'exec-and-forget /opt/homebrew/opt/autoraise/bin/AutoRaise -delay 2 &'
+  'exec-and-forget /opt/homebrew/opt/autoraise/bin/AutoRaise -delay 1'
 ]
 
 # Notify Sketchybar about workspace change
@@ -34,7 +34,7 @@ enable-normalization-opposite-orientation-for-nested-containers = false
 # You can set 0 to disable the padding feature
 accordion-padding = 30
 
-# Possible values: tiles|accordiona
+# Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
 
 # Possible values: horizontal|vertical|auto
@@ -52,6 +52,7 @@ key-mapping.preset = 'qwerty'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = ['move-mouse window-lazy-center']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -101,12 +102,12 @@ outer.right =      10
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
-# alt-enter = '''exec-and-forget osascript -e '
-# tell application "Terminal"
-#     do script
-#     activate
-# end tell'
-# '''
+alt-enter = '''exec-and-forget osascript -e '
+tell application "WezTerm"
+    activate
+end tell'
+'''
+alt-backtick = 'exec-and-forget open -n /Applications/WezTerm.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
@@ -192,3 +193,27 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.VSCode'
+  run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+  if.app-id = 'org.mozilla.firefox'
+  run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+  if.app-id = 'com.google.Chrome'
+  run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.finder'
+  run = 'layout floating'
+
+[[on-window-detected]]
+  if.window-title-regex-substring = 'Picture-in-Picture'
+  run = ['layout floating']
+
+[[on-window-detected]]
+  if.app-id = 'com.github.wez.wezterm'
+  run = 'layout floating'
