@@ -30,24 +30,22 @@ test -d $__fish_cache_dir; or mkdir -p $__fish_cache_dir
 find $__fish_cache_dir -maxdepth 1 -name '*.fish' -type f -mmin +1200 -delete
 
 # Setup homebrew.
-if set -q IS_MACOS
-    if not test -s $__fish_cache_dir/brew_init.fish
-        if test -e /opt/homebrew/bin/brew
-            /opt/homebrew/bin/brew shellenv >$__fish_cache_dir/brew_init.fish
-        else if test -e /usr/local/bin/brew
-            /usr/local/bin/brew shellenv >$__fish_cache_dir/brew_init.fish
-        end
+if not test -s $__fish_cache_dir/brew_init.fish
+    if test -e /opt/homebrew/bin/brew
+        /opt/homebrew/bin/brew shellenv >$__fish_cache_dir/brew_init.fish
+    else if test -e /home/linuxbrew/.linuxbrew/bin/brew
+        /home/linuxbrew/.linuxbrew/bin/brew shellenv >$__fish_cache_dir/brew_init.fish
     end
-    if test -e $__fish_cache_dir/brew_init.fish
-        source $__fish_cache_dir/brew_init.fish
-    end
-
-    # Add fish completions
-    if test -e "$HOMEBREW_PREFIX/share/fish/completions"
-        set --append fish_complete_path "$HOMEBREW_PREFIX/share/fish/completions"
-    end
-    set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
 end
+if test -e $__fish_cache_dir/brew_init.fish
+    source $__fish_cache_dir/brew_init.fish
+end
+
+# Add fish completions
+if test -e "$HOMEBREW_PREFIX/share/fish/completions"
+    set --append fish_complete_path "$HOMEBREW_PREFIX/share/fish/completions"
+end
+set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
 
 # Add bin directories to path.
 set -g prepath (

@@ -4,6 +4,8 @@ abbr q exit
 
 abbr apt 'sudo apt'
 abbr apt-get 'sudo apt-get'
+abbr please ' please'
+abbr pls ' please'
 
 # Navigation
 abbr -- - 'cd -'
