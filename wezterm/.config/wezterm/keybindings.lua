@@ -33,7 +33,22 @@ function M.apply_to_config(config)
 
 		-- Tmux style keybindings
 		-- Multiplexer
-		{ key = 'a',     mods = 'LEADER',       action = act.AttachDomain(constants.is_macos and 'unix' or 'SSHMUX:work') },
+		{
+			key = 'a',
+			mods = 'LEADER',
+			action = wezterm.action_callback(function(window, pane)
+				local domain_name = constants.is_macos and 'unix' or 'SSHMUX:work'
+				local current_domain = pane:get_domain_name()
+				-- Skip if already attached to the target domain
+				if current_domain == domain_name then
+					return
+				end
+				local current_tab = window:active_tab()
+				window:perform_action(act.AttachDomain(domain_name), pane)
+				current_tab:activate()
+				window:perform_action(act.CloseCurrentTab { confirm = true }, pane)
+			end),
+		},
 		{ key = 'd',     mods = 'LEADER',       action = act.DetachDomain('CurrentPaneDomain') },
 
 		-- Workspace (Session)
