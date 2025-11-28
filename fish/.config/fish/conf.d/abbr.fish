@@ -31,7 +31,6 @@ abbr tn 'tmux new-session -As'
 abbr tl 'tmux list-sessions'
 abbr ta 'tmux attach-session -t'
 
-abbr y yazi
 abbr lg lazygit
 
 abbr mcd mkcd
