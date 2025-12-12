@@ -4,7 +4,17 @@ local act = wezterm.action
 
 local M = {}
 
+local function pane_navigation_action(direction, fallback_direction)
+	return wezterm.action_callback(function(win, pane)
+		local num_panes = #win:active_tab():panes()
+		local pane_direction = num_panes == 2 and fallback_direction or direction
+		win:perform_action({ ActivatePaneDirection = pane_direction }, pane)
+	end)
+end
+
+
 function M.apply_to_config(config)
+	config.disable_default_key_bindings = true
 	config.leader = { key = '`', mods = nil, timeout_milliseconds = 1500 }
 	config.keys = {
 		{
@@ -24,12 +34,16 @@ function M.apply_to_config(config)
 				end
 			end),
 		},
-		{ key = 'v',     mods = 'CTRL',         action = act.PasteFrom('Clipboard') }, -- Required for Voice-to-text apps
-		-- { key = ' ',     mods = 'LEADER', action = act.ActivateCommandPalette },
-		{ key = 'Enter', mods = 'SHIFT',        action = 'QuickSelect' },
-		{ key = 'Enter', mods = 'ALT',          action = act.Nop },
-		{ key = 't',     mods = 'CTRL',         action = act.ShowLauncherArgs { flags = 'FUZZY|DOMAINS' } },
-		{ key = 'w',     mods = 'CTRL',         action = act.CloseCurrentPane { confirm = true } },
+		{ key = 'v',         mods = 'CTRL',       action = act.PasteFrom('Clipboard') }, -- Required for Voice-to-text apps
+		{ key = ' ',         mods = 'LEADER',     action = act.ActivateCommandPalette },
+		{ key = 'P',         mods = 'CTRL|SHIFT', action = act.ActivateCommandPalette }, -- Similar to IDEs
+		{ key = 'Enter',     mods = 'SHIFT',      action = act.QuickSelect },
+		{ key = 'Enter',     mods = 'ALT',        action = act.Nop },
+		{ key = 't',         mods = 'CTRL',       action = act.ShowLauncherArgs { flags = 'FUZZY|DOMAINS' } },
+		{ key = 'Backspace', mods = 'CTRL',       action = act.SendKey { key = 'w', mods = 'CTRL' } }, -- Delete word backward
+		{ key = 'Delete',    mods = 'CTRL',       action = act.SendKey { key = 'd', mods = 'ALT' } }, -- Delete word forward
+		{ key = 'w',         mods = 'CTRL',       action = act.CloseCurrentPane { confirm = true } },
+		{ key = 'Q',         mods = 'CTRL|SHIFT', action = act.QuitApplication },
 
 		-- Tmux style keybindings
 		-- Multiplexer
@@ -49,25 +63,25 @@ function M.apply_to_config(config)
 				window:perform_action(act.CloseCurrentTab { confirm = true }, pane)
 			end),
 		},
-		{ key = 'd',     mods = 'LEADER',       action = act.DetachDomain('CurrentPaneDomain') },
+		{ key = 'd',   mods = 'LEADER',       action = act.DetachDomain('CurrentPaneDomain') },
 
 		-- Workspace (Session)
-		{ key = 's',     mods = 'LEADER',       action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
+		{ key = 's',   mods = 'LEADER',       action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
 
 		-- Tab (Window)
-		{ key = 'c',     mods = 'LEADER',       action = act.SpawnTab('CurrentPaneDomain') },
-		{ key = '1',     mods = 'LEADER',       action = act.ActivateTab(0) },
-		{ key = '2',     mods = 'LEADER',       action = act.ActivateTab(1) },
-		{ key = '3',     mods = 'LEADER',       action = act.ActivateTab(2) },
-		{ key = '4',     mods = 'LEADER',       action = act.ActivateTab(3) },
-		{ key = '5',     mods = 'LEADER',       action = act.ActivateTab(4) },
-		{ key = '6',     mods = 'LEADER',       action = act.ActivateTab(5) },
-		{ key = '7',     mods = 'LEADER',       action = act.ActivateTab(6) },
-		{ key = '8',     mods = 'LEADER',       action = act.ActivateTab(7) },
-		{ key = '9',     mods = 'LEADER',       action = act.ActivateTab(-1) },
-		{ key = 'Tab',   mods = 'LEADER',       action = act.ActivateTabRelative(1) },
-		{ key = 'Tab',   mods = 'LEADER|SHIFT', action = act.ActivateTabRelative(-1) },
-		{ key = 'w',     mods = 'LEADER',       action = act.ShowTabNavigator },
+		{ key = 'c',   mods = 'LEADER',       action = act.SpawnTab('CurrentPaneDomain') },
+		{ key = '1',   mods = 'LEADER',       action = act.ActivateTab(0) },
+		{ key = '2',   mods = 'LEADER',       action = act.ActivateTab(1) },
+		{ key = '3',   mods = 'LEADER',       action = act.ActivateTab(2) },
+		{ key = '4',   mods = 'LEADER',       action = act.ActivateTab(3) },
+		{ key = '5',   mods = 'LEADER',       action = act.ActivateTab(4) },
+		{ key = '6',   mods = 'LEADER',       action = act.ActivateTab(5) },
+		{ key = '7',   mods = 'LEADER',       action = act.ActivateTab(6) },
+		{ key = '8',   mods = 'LEADER',       action = act.ActivateTab(7) },
+		{ key = '9',   mods = 'LEADER',       action = act.ActivateTab(-1) },
+		{ key = 'Tab', mods = 'LEADER',       action = act.ActivateTabRelative(1) },
+		{ key = 'Tab', mods = 'LEADER|SHIFT', action = act.ActivateTabRelative(-1) },
+		{ key = 'w',   mods = 'LEADER',       action = act.ShowTabNavigator },
 		-- Key table for moving tabs around
 		{
 			key = '.',
@@ -96,21 +110,21 @@ function M.apply_to_config(config)
 		},
 
 		-- Pane
-		{ key = 'h',          mods = 'LEADER', action = act.ActivatePaneDirection('Left') },
-		{ key = 'j',          mods = 'LEADER', action = act.ActivatePaneDirection('Down') },
-		{ key = 'k',          mods = 'LEADER', action = act.ActivatePaneDirection('Up') },
-		{ key = 'l',          mods = 'LEADER', action = act.ActivatePaneDirection('Right') },
-		{ key = 'LeftArrow',  mods = 'CTRL',   action = act.ActivatePaneDirection('Left') },
-		{ key = 'RightArrow', mods = 'CTRL',   action = act.ActivatePaneDirection('Right') },
-		{ key = 'UpArrow',    mods = 'CTRL',   action = act.ActivatePaneDirection('Up') },
-		{ key = 'DownArrow',  mods = 'CTRL',   action = act.ActivatePaneDirection('Down') },
+		{ key = 'h', mods = 'LEADER', action = pane_navigation_action('Left', 'Prev') },
+		{ key = 'j', mods = 'LEADER', action = pane_navigation_action('Down', 'Next') },
+		{ key = 'k', mods = 'LEADER', action = pane_navigation_action('Up', 'Prev') },
+		{ key = 'l', mods = 'LEADER', action = pane_navigation_action('Right', 'Next') },
+		-- { key = 'LeftArrow',  mods = 'CTRL',   action = act.ActivatePaneDirection('Left') },
+		-- { key = 'RightArrow', mods = 'CTRL',   action = act.ActivatePaneDirection('Right') },
+		-- { key = 'UpArrow',    mods = 'CTRL',   action = act.ActivatePaneDirection('Up') },
+		-- { key = 'DownArrow',  mods = 'CTRL',   action = act.ActivatePaneDirection('Down') },
 		-- { key = ' ', mods = 'LEADER', action = act.RotatePanes('Clockwise') },
 		-- { key = " ",     mods = "LEADER", action = act.PaneSelect { mode = "SwapWithActiveKeepFocus" } },
-		{ key = 'z',          mods = 'LEADER', action = act.TogglePaneZoomState },
-		{ key = 'x',          mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
-		{ key = 'h',          mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-		{ key = 'v',          mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-		{ key = 'p',          mods = 'LEADER', action = act.PaneSelect },
+		{ key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+		{ key = 'x', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+		-- { key = 's', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+		{ key = 'v', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+		{ key = 'p', mods = 'LEADER', action = act.PaneSelect },
 		-- Resize pane key table
 		{
 			key = 'r',
@@ -120,7 +134,7 @@ function M.apply_to_config(config)
 		{
 			-- Move Pane to New Tab
 			key = '!',
-			mods = 'LEADER | SHIFT',
+			mods = 'LEADER|SHIFT',
 			action = wezterm.action_callback(function(win, pane)
 				pane:move_to_new_tab()
 			end),
@@ -142,16 +156,16 @@ function M.apply_to_config(config)
 			{ key = 'j',      action = act.AdjustPaneSize { 'Down', 1 } },
 			{ key = 'k',      action = act.AdjustPaneSize { 'Up', 1 } },
 			{ key = 'l',      action = act.AdjustPaneSize { 'Right', 1 } },
-			{ key = 'Escape', action = 'PopKeyTable' },
-			{ key = 'Enter',  action = 'PopKeyTable' },
+			{ key = 'Escape', action = act.PopKeyTable },
+			{ key = 'Enter',  action = act.PopKeyTable },
 		},
 		move_tab = {
 			{ key = 'h',      action = act.MoveTabRelative(-1) },
 			{ key = 'j',      action = act.MoveTabRelative(-1) },
 			{ key = 'k',      action = act.MoveTabRelative(1) },
 			{ key = 'l',      action = act.MoveTabRelative(1) },
-			{ key = 'Escape', action = 'PopKeyTable' },
-			{ key = 'Enter',  action = 'PopKeyTable' },
+			{ key = 'Escape', action = act.PopKeyTable },
+			{ key = 'Enter',  action = act.PopKeyTable },
 		},
 	}
 end

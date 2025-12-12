@@ -1,12 +1,13 @@
-local wezterm = require('wezterm')
-local act = wezterm.action
-local mux = wezterm.mux
-local config = wezterm.config_builder()
+local wezterm     = require 'wezterm'
+local act         = wezterm.action
+local mux         = wezterm.mux
+local config      = wezterm.config_builder()
 
-local constants = require('constants')
-local commands = require('commands')
-local plugins = require('plugins')
-local keybindings = require('keybindings')
+local constants   = require 'constants'
+local commands    = require 'commands'
+local plugins     = require 'plugins'
+local keybindings = require 'keybindings'
+
 
 local function debug_log_print()
 	--wezterm.log_info("Default hyperlink rules " .. wezterm.default_hyperlink_rules())
@@ -109,9 +110,7 @@ plugins.setup(config)
 local scratch = '_quake'
 wezterm.on('gui-attached', function(domain)
 	local workspace = mux.get_active_workspace()
-	if workspace ~= scratch then
-		return
-	end
+	if workspace ~= scratch then return end
 
 	-- Compute width: 66% of screen width, up to 1000 px
 	local width_ratio = 0.66
@@ -124,7 +123,7 @@ wezterm.on('gui-attached', function(domain)
 	for _, window in ipairs(mux.all_windows()) do
 		local guiWindow = window:gui_window()
 		if guiWindow ~= nil then
-			guiWindow:perform_action(act.SetWindowLevel('AlwaysOnTop'), guiWindow:active_pane())
+			guiWindow:perform_action(act.SetWindowLevel 'AlwaysOnTop', guiWindow:active_pane())
 			guiWindow:set_inner_size(width, height)
 		end
 	end
