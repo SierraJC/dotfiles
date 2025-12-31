@@ -25,6 +25,8 @@ abbr gcg 'git config --edit --global'
 abbr gcl 'git config --edit --local'
 abbr gcgl 'git config --edit --file $HOME/.gitconfig.local'
 abbr gig '$EDITOR ~/.gitignore_global'
+# Git
+abbr -a --set-cursor='%' -- gcm 'git commit -m "%"'
 
 # tmux
 abbr tn 'tmux new-session -As'
