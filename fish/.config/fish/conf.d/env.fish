@@ -1,11 +1,11 @@
 set -gx DOTFILES $HOME/.dotfiles
 
 # Set editor variables.
-set -q PAGER; or set -Ux PAGER less
-set -q VISUAL; or set -Ux VISUAL code
-set -q EDITOR; or set -Ux EDITOR nvim
+set -q PAGER; or set -gx PAGER less
+set -q VISUAL; or set -gx VISUAL code
+set -q EDITOR; or set -gx EDITOR nvim
 
-set -q BROWSER; or set -Ux EDITOR open
+set -q BROWSER; or set -gx BROWSER open
 
 # Other vars
-set -q FISH_THEME; or set -U FISH_THEME "Catppuccin Mocha"
+set -q FISH_THEME; or set -g FISH_THEME "Catppuccin"
