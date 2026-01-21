@@ -2,42 +2,65 @@
   "$schema": "https://opencode.ai/config.json",
   "theme": "opencode",
   "autoupdate": true,
-  "instructions": [
-    "CLAUDE.md"
-  ],
+  "instructions": ["CLAUDE.md"],
+  "default_agent": "plan",
+  "keybinds": {
+    "leader": "`",
+  },
   "share": "disabled",
   "formatter": {
     "prettier": {
-      "disabled": false
-    }
+      "disabled": false,
+    },
+  },
+  "compaction": {
+    "auto": false,
+    "prune": true,
+  },
+  "server": {
+    "port": 4096,
+    "hostname": "0.0.0.0",
+    "mdns": false,
+    // "cors": ["http://localhost:5173"]
+  },
+  "small_model": "github-copilot/gpt-5-mini",
+  "agent": {
+    "plan": {
+      "model": "github-copilot/claude-opus-4.5",
+    },
+    "build": {
+      "model": "github-copilot/claude-haiku-4.5",
+      // "model": "github-copilot/claude-sonnet-4.5",
+    },
   },
   "permission": {
     "bash": {
       // Allow
       "find *": "allow",
       "rg *": "allow",
+      "grep *": "allow",
       "ls *": "allow",
       "gh issue view *": "allow",
       "gh pr view *": "allow",
       // Deny
       "rm -rf /": "deny",
-      "grep *": "deny",
       // Default
-      "*": "ask"
+      "*": "ask",
     },
+    "grep": "allow",
     "edit": "ask",
-    "webfetch": "allow"
+    "webfetch": "ask",
   },
   "mcp": {
     "context7": {
       "enabled": true,
       "type": "remote",
-      "url": "https://mcp.context7.com/mcp"
+      "url": "https://mcp.context7.com/mcp",
     },
     "grep": {
       "enabled": true,
       "type": "remote",
-      "url": "https://mcp.grep.app"
-    }
-  }
+      "url": "https://mcp.grep.app",
+    },
+  },
 }

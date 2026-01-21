@@ -39,8 +39,8 @@ abbr mcd mkcd
 
 # Claude CLI with better global mcp json
 set -l claude_params "--mcp-config=$HOME/.claude/.mcp.json --mcp-config=$HOME/.claude/.mcp.local.json"
-if test -f $HOME/.claude/local/claude
-    alias claude "$HOME/.claude/local/claude $claude_params"
+if test -f $HOME/.local/bin/claude
+    alias claude "$HOME/.local/bin/claude $claude_params"
 else
     alias claude "claude $claude_params"
 end

@@ -15,8 +15,17 @@
       "Bash(rg:*)",
       "Bash(grep:*)",
       "Bash(ls:*)",
+      "mcp__context7__get-library-docs",
+      "mcp__context7__resolve-library-id",
+      "mcp__grep__searchGitHub",
+      "mcp__ide__getDiagnostics",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
       "Bash(gh issue view:*)",
-      "Bash(gh pr view:*)"
+      "Bash(gh issue list:*)",
+      "Bash(gh project view:*)",
+      "Bash(gh project item-list:*)",
+      "Bash(git log:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -24,13 +33,23 @@
       "Bash(dd if=/dev/zero of=/dev/*)",
       "Bash(mkfs:*)",
       "Bash(> /dev/sda*)",
-      "Read(*/.env)",
-      "Read(.env)",
+      "NotebookEdit",
       "NotebookRead",
-      "NotebookEdit"
-    ]
+      "Read(.env)",
+      "Read(*/.env)",
+      "Read(**/.env)",
+      "Read(**/keyfile.json)"
+    ],
+    "defaultMode": "default",
+    "additionalDirectories": ["/tmp/"]
   },
+  "hooks": {},
+  "enabledPlugins": {
+    "explanatory-output-style@claude-plugins-official": true
+  },
+  "outputStyle": "Explanatory",
   "alwaysThinkingEnabled": true,
+  "autoUpdatesChannel": "latest",
   "feedbackSurveyState": {
     "lastShownTime": 1754027380709
   }
