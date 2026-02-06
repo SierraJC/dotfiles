@@ -40,11 +40,15 @@ end
 set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
 set -q HOMEBREW_NO_AUTO_UPDATE || set -gx HOMEBREW_NO_AUTO_UPDATE 1
 
+set -q MISE_FISH_AUTO_ACTIVATE || set -gx MISE_FISH_AUTO_ACTIVATE 0
+
 # Add bin directories to path.
 set -g prepath (
     path filter \
         $HOME/bin \
         $HOME/.local/bin \
+        # faster than `mise activate fish`
+        # $XDG_DATA_HOME/mise/shims \
         $HOME/go/bin
 )
 fish_add_path --prepend --move $prepath

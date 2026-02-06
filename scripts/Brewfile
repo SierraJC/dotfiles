@@ -15,6 +15,7 @@ brew 'fd' # Better find
 brew 'rg' # Better grep
 brew 'yazi' # Terminal file manager
 brew 'git-delta' # Better git diffs
+brew 'mise' # Manage dev tooling, .env, task runner.
 # brew 'gdrive' # Google Drive
 # brew 'mas' # Mac App Store installer cli
 

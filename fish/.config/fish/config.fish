@@ -22,3 +22,8 @@ if status is-interactive
         __cache_and_source zoxide_init.fish "zoxide init --cmd cd fish"
     end
 end
+
+if type -q mise
+    __cache_and_source mise_init.fish "mise activate fish"
+end
+

@@ -17,6 +17,7 @@ if test ! $(which brew); then
 fi
 
 title " 🍺 Installing Homebrew packages"
+brew analytics off
 brew update
 brew bundle --file ./scripts/Brewfile
 
