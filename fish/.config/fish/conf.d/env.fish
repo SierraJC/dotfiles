@@ -8,4 +8,4 @@ set -q EDITOR; or set -gx EDITOR nvim
 set -q BROWSER; or set -gx BROWSER open
 
 # Other vars
-set -q FISH_THEME; or set -g FISH_THEME "Catppuccin"
+set -q FISH_THEME; or set -g FISH_THEME "catppuccin-mocha"
