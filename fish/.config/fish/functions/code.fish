@@ -11,6 +11,12 @@ function code \
         return
     end
 
+    # If code is already in PATH, use it directly
+    if type -q code
+        command code $argv
+        return
+    end
+
     echo "Finding VSCode server..."
 
     # Find latest VSCode server node binary (sorted by modification time, newest first)
