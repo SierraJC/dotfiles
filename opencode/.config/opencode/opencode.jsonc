@@ -1,55 +1,61 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "username": "Sierra",
   "theme": "catppuccin",
-  "autoupdate": true,
-  "instructions": ["CLAUDE.md"],
+  "autoupdate": "notify",
   "default_agent": "plan",
-  "keybinds": {
-    "leader": "`",
-  },
   "share": "disabled",
+  "keybinds": { "leader": "`" },
   "formatter": {
-    "prettier": {
-      "disabled": false,
-    },
+    "prettier": { "disabled": false },
+    "eslint": { "disabled": false },
   },
-  "compaction": {
-    "auto": false,
-    "prune": true,
-  },
+  "compaction": { "auto": false, "prune": false },
   "server": {
     "port": 4096,
     "hostname": "0.0.0.0",
     "mdns": false,
-    // "cors": ["http://localhost:5173"]
+    // "cors": ["http://localhost:4096"]
   },
   "small_model": "github-copilot/gpt-5-mini",
   "agent": {
     "plan": {
-      "model": "github-copilot/claude-opus-4.5",
+      "model": "opencode/kimi-k2.5-free",
     },
     "build": {
-      // "model": "github-copilot/claude-haiku-4.5",
-      "model": "github-copilot/claude-sonnet-4.5",
+      "model": "opencode/kimi-k2.5-free",
     },
   },
+  "experimental": { "batch_tool": true },
   "permission": {
     "bash": {
+      // Default
+      "*": "ask",
       // Allow
       "find *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "tree *": "allow",
       "rg *": "allow",
       "grep *": "allow",
       "ls *": "allow",
+      "jq *": "allow",
       "gh issue view *": "allow",
       "gh pr view *": "allow",
       // Deny
       "rm -rf /": "deny",
-      // Default
+    },
+    "edit": {
       "*": "ask",
     },
+    "codesearch": "deny",
+    "lsp": "allow",
     "grep": "allow",
-    "edit": "ask",
+    "list": "allow",
     "webfetch": "ask",
+    "external_directory": {
+      "/tmp/**": "allow",
+    },
   },
   "mcp": {
     "context7": {
