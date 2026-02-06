@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    ".zshrc.local": "shellscript",
+    ".gitconfig.local": "properties"
+  },
+  "json.schemaDownload.trustedDomains": {
+    "https://opencode.ai/config.json": true
+  }
+}
