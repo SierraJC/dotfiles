@@ -3,13 +3,6 @@ node_modules/
 .vscode/*
 __debug_bin*
 .DS_Store
+**/*.local.*
 
-# AI tools config
-.github/prompts/
-.github/instructions/
-.github/copilot-instructions.md
-memory-bank/
-.aider.*
-
-**/CLAUDE.local.md
-**/.claude/settings.local.json
+.actrc
