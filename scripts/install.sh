@@ -81,6 +81,7 @@ if ask "Configure git to ignore changes to *.local* files?"; then
     "git/.gitconfig.local"
     "claude/.claude/.mcp.local.json"
     "fish/.config/fish/conf.d/abbr.local.fish"
+    "mise/.config/mise/config.local.toml"
   )
 
   for file in "${local_files[@]}"; do

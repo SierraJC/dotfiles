@@ -11,7 +11,7 @@ if status is-interactive
     # fish_config theme choose Catppuccin --color-theme=dark
 
     if type -q starship
-        __cache_and_source starship_init.fish "starship init fish"
+        __cache_and_source starship_init.fish "starship init fish --print-full-init"
         enable_transience
     end
 
