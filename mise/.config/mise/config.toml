@@ -1,8 +1,7 @@
 [tools]
 bun = "latest"
-node = "lts"
+starship = "latest"
 
 claude-code = "latest"
 codex = "latest"
 opencode = "latest"
-
