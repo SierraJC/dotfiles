@@ -1,1 +1,8 @@
 [tools]
+bun = "latest"
+node = "lts"
+
+claude-code = "latest"
+codex = "latest"
+opencode = "latest"
+

@@ -98,6 +98,14 @@ function install_gh() {
   #  gh extension install github/gh-copilot
 }
 
+function install_mise() {
+  title "📦 Installing mise"
+
+  if ! curl https://mise.run | sh; then
+    warning "Could not install mise from mise.run. Skipping mise installation."
+  fi
+}
+
 function install_fzf() {
   title "📦 Installing fzf from GitHub"
 
@@ -212,6 +220,7 @@ install_packages
 # install_locale
 install_docker
 install_gh
+install_mise
 install_fzf
 install_yazi
 install_delta
