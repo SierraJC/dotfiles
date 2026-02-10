@@ -25,6 +25,9 @@ if status is-interactive
     if type -q zoxide
         __cache_and_source zoxide_init.fish "zoxide init --cmd cd fish"
     end
+
+    # Bind Ctrl+G to forget last command from history
+    bind -M insert \cg forget
 end
 
 
