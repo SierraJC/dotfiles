@@ -1,6 +1,6 @@
 abbr cls " clear && printf '\e[3J'"
 abbr c " clear && printf '\e[3J'"
-abbr q exit
+abbr q " exit"
 
 abbr apt 'sudo apt'
 abbr apt-get 'sudo apt-get'

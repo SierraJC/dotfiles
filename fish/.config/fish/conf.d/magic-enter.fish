@@ -1,18 +1,24 @@
 function magic-enter-cmd --description "Command to run when pressing enter on an empty prompt"
-    set --local cmd 'ls -laF'
+    set --local cmd ls -laF
 
     if command git rev-parse --is-inside-work-tree &>/dev/null
-        set cmd "git status -sb"
+        set cmd git status -sb
     end
 
-    echo $cmd
+    # Output as tokens (one per line) so command substitution returns a proper argv list.
+    printf '%s\n' $cmd
 end
 
 function magic-enter
     set -l cmd (commandline)
     if test -z "$cmd"
-        commandline -r (magic-enter-cmd)
+        # Run the magic command directly so it doesn't get recorded in history.
+        set -l magic_cmd (magic-enter-cmd)
         commandline -f suppress-autosuggestion
+        printf '\n'
+        $magic_cmd
+        commandline -f repaint
+        return
     end
     commandline -f execute
 end
