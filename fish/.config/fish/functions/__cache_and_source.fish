@@ -9,3 +9,9 @@ function __cache_and_source \
 
     source $cache_path
 end
+
+function __cache_clear \
+    --description "Clear all cache files"
+
+    rm -f $__fish_cache_dir/*.fish
+end

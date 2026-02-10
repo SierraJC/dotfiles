@@ -2,13 +2,13 @@
 set -g fish_greeting
 set -gx COLORTERM truecolor
 
-if type -q mise
-    __cache_and_source mise_init.fish "mise activate fish"
-end
-
 if status is-interactive
     set -g fish_key_bindings fish_vi_key_bindings
     # fish_config theme choose Catppuccin --color-theme=dark
+
+    if type -q mise
+        __cache_and_source mise_init.fish "mise activate fish"
+    end
 
     if type -q starship
         __cache_and_source starship_init.fish "starship init fish --print-full-init"

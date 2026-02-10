@@ -20,7 +20,7 @@ abbr lsa 'ls -lah'
 
 abbr dotfiles 'cd ~/.dotfiles'
 
-# Edit git config 
+# Edit git config
 abbr gcg 'git config --edit --global'
 abbr gcl 'git config --edit --local'
 abbr gcgl 'git config --edit --file $HOME/.gitconfig.local'
@@ -39,8 +39,4 @@ abbr mcd mkcd
 
 # Claude CLI with better global mcp json
 set -l claude_params "--mcp-config=$HOME/.claude/.mcp.json --mcp-config=$HOME/.claude/.mcp.local.json"
-if test -f $HOME/.local/bin/claude
-    alias claude "$HOME/.local/bin/claude $claude_params"
-else
-    alias claude "claude $claude_params"
-end
+alias claude "claude $claude_params"

@@ -26,7 +26,11 @@ test -d $__fish_cache_dir; or mkdir -p $__fish_cache_dir
 # Remove expired cache files.
 find $__fish_cache_dir -maxdepth 1 -name '*.fish' -type f -mmin +1200 -delete
 
-# Setup homebrew.
+set -q MISE_FISH_AUTO_ACTIVATE || set -gx MISE_FISH_AUTO_ACTIVATE 0
+
+# Setup homebrew
+set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
+set -q HOMEBREW_NO_AUTO_UPDATE || set -gx HOMEBREW_NO_AUTO_UPDATE 1
 if test -e /opt/homebrew/bin/brew
     __cache_and_source brew_init.fish "/opt/homebrew/bin/brew shellenv"
 else if test -e /home/linuxbrew/.linuxbrew/bin/brew
@@ -37,18 +41,16 @@ end
 if test -e "$HOMEBREW_PREFIX/share/fish/completions"
     set --append fish_complete_path "$HOMEBREW_PREFIX/share/fish/completions"
 end
-set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
-set -q HOMEBREW_NO_AUTO_UPDATE || set -gx HOMEBREW_NO_AUTO_UPDATE 1
-
-set -q MISE_FISH_AUTO_ACTIVATE || set -gx MISE_FISH_AUTO_ACTIVATE 0
 
 # Add bin directories to path.
 set -g prepath (
     path filter \
         $HOME/bin \
         $HOME/.local/bin \
-        # faster than `mise activate fish`
-        # $XDG_DATA_HOME/mise/shims \
         $HOME/go/bin
 )
 fish_add_path --prepend --move $prepath
+
+if type -q mise
+    __cache_and_source mise_shims_init.fish "mise activate fish --shims"
+end
