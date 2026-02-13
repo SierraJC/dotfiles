@@ -38,17 +38,17 @@ install_plugins() {
 title "🐚 Setting up Zsh shell"
 
 # Check for Oh My Zsh and install if we don't have it
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  title "Installing Oh My Zsh"
-  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-fi
+# if [ ! -d "$HOME/.oh-my-zsh" ]; then
+#   title "Installing Oh My Zsh"
+#   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# fi
 
-title "Installing Zsh plugins"
-install_plugins theme powerlevel10k https://github.com/romkatv/powerlevel10k.git
+# title "Installing Zsh plugins"
+# install_plugins theme powerlevel10k https://github.com/romkatv/powerlevel10k.git
 
-install_plugins plugin you-should-use https://github.com/MichaelAquilina/zsh-you-should-use.git
-install_plugins plugin zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git
-install_plugins plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git
+# install_plugins plugin you-should-use https://github.com/MichaelAquilina/zsh-you-should-use.git
+# install_plugins plugin zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git
+# install_plugins plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git
 
 # Check if the current shell is already zsh (either system or Homebrew version)
 if [ "$SHELL" != "/bin/zsh" ] && [ "$SHELL" != "/opt/homebrew/bin/zsh" ]; then

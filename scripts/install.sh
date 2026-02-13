@@ -77,7 +77,6 @@ if ask "Configure git to ignore changes to *.local* files?"; then
   title "⚙️ Configuring files with git assume-unchanged"
   local_files=(
     "zsh/.zshrc.local"
-    "zsh/.zsh.d/aliases.local.zsh"
     "git/.gitconfig.local"
     "claude/.claude/.mcp.local.json"
     "fish/.config/fish/conf.d/abbr.local.fish"
