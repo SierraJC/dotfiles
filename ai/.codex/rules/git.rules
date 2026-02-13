@@ -1,0 +1,7 @@
+prefix_rule(pattern = ["git", "diff"], decision = "allow")
+prefix_rule(pattern = ["git", "grep"], decision = "allow")
+prefix_rule(pattern = ["git", "log"], decision = "allow")
+prefix_rule(pattern = ["git", "show"], decision = "allow")
+prefix_rule(pattern = ["git", "status"], decision = "allow")
+prefix_rule(pattern = ["gh", "issue", "view"], decision = "allow")
+prefix_rule(pattern = ["gh", "pr", "view"], decision = "allow")
