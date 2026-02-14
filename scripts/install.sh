@@ -1,81 +1,191 @@
-#!/bin/bash
+#!/bin/env bash
 
-# Check if running as root
+# Usage: bash scripts/install.sh
+#        NONINTERACTIVE=1 bash scripts/install.sh
+
 if [ "$(id -u)" = "0" ]; then
-  warning "This script should not be run as root"
+  echo "/!\\ This script should not be run as root /!\\"
   exit 1
 fi
 
-cd $HOME/.dotfiles || exit 1
+export USER="${USER:-$(whoami)}"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$HOME/.dotfiles" || exit 1
 
-source "$SCRIPT_DIR/common.sh"
+# MARK: Utility functions
 
-if ((isMac)); then
-  title "🍎 Setting up Mac..."
-elif ((isLinux)); then
-  title "🐧 Setting up Linux..."
-else
-  warning "This script only supports Linux and macOS. Exiting..."
-  exit 1
-fi
+bold=$(tput bold)
+reset=$(tput sgr0)
 
-# Ask for the administrator password upfront
-sudo -v
+is_mac()   { [[ "$(uname -s)" == "Darwin" ]]; }
+is_linux() { [[ "$(uname -s)" == "Linux" ]]; }
+is_wsl()   { is_linux && grep -qi microsoft /proc/version 2>/dev/null; }
 
-# Keep-alive: update existing `sudo` time stamp until the script has finished
-while true; do
-  sudo -n true
-  sleep 60
-  kill -0 "$$" || exit
-done 2>/dev/null &
+title() { echo "${bold}==> $1${reset}"; echo; }
+warn()  { tput setaf 1; echo "/!\\ $1 /!\\"; tput sgr0; }
 
-if [ -z "$XDG_CONFIG_HOME" ]; then
-  title "🏠 Setting up ~/.config directory"
-  if [ ! -d "${HOME}/.config" ]; then
-    mkdir -p "${HOME}/.config"
+ask() {
+  [[ "${NONINTERACTIVE:-0}" == "1" ]] && return 1
+  read -p "$1 (y/N) " response
+  [[ "$response" =~ ^[yY]$ ]]
+}
+
+# MARK: Step functions
+
+ensure_directories() {
+  title "Creating prerequisite directories"
+  local dirs=(
+    "$HOME/.config/gh"
+    "$HOME/.config/iterm2"
+    "$HOME/.config/tmux"
+    "$HOME/.claude"
+    "$HOME/.local/share"
+    "$HOME/.local/bin"
+  )
+  mkdir -p "${dirs[@]}"
+}
+
+install_apt_prerequisites() {
+  is_linux || return 0
+
+  title "Installing apt prerequisites"
+
+  local packages=(
+    build-essential
+    gcc
+    git
+    procps
+    curl
+    file
+  )
+  if is_wsl; then
+    packages+=(wslu)
   fi
-  export XDG_CONFIG_HOME="${HOME}/.config"
-fi
 
-# NOTE: Path must exist otherwise stow will symlink the entire ~/.local folder
-if [ -z "$XDG_DATA_HOME" ]; then
-  title "🏠 Setting up ~/.local/share directory"
-  if [ ! -d "${HOME}/.local/share" ]; then
-    mkdir -p "${HOME}/.local/share"
+  sudo apt-get update
+  sudo bash -c 'DEBIAN_FRONTEND=noninteractive apt-get -o DPkg::options::=--force-confdef -o DPkg::options::=--force-confold upgrade -y'
+  sudo apt-get install -y "${packages[@]}"
+  sudo apt-get autoremove -y
+  sudo apt-get autoclean
+}
+
+install_homebrew() {
+  if command -v brew &>/dev/null; then
+    warn "Homebrew already installed"
+    return 0
   fi
-  export XDG_DATA_HOME="${HOME}/.local/share"
-fi
 
-# Double check that we're on macOS before continuing
-if ((isMac)); then
-  source "$SCRIPT_DIR/macos.sh"
-elif ((isLinux)); then
-  source "$SCRIPT_DIR/ubuntu.sh"
-fi
+  title "Installing Homebrew"
+  export HOMEBREW_NO_ANALYTICS=1
 
-source "$SCRIPT_DIR/shell.sh"
+  local brew_installer
+  brew_installer="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Clean up existing files that might conflict with stow
-echo
-warning "Backing up existing files that might conflict with stow..."
-files=(
-  ".zshrc"
-  ".gitconfig"
-  ".config/gh/config.yml"
-)
-for file in "${files[@]}"; do
-  if [ -f "$HOME/$file" ]; then
-    mv "$HOME/$file" "$HOME/${file}.old"
+  if is_mac; then
+    if ! /bin/bash -c "$brew_installer"; then
+      warn "Could not install Homebrew. Exiting."
+      exit 1
+    fi
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  else
+    if ! NONINTERACTIVE=1 /bin/bash -c "$brew_installer"; then
+      warn "Could not install Homebrew. Exiting."
+      exit 1
+    fi
+    if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    fi
   fi
-done
+}
 
-source "$SCRIPT_DIR/stow.sh"
+install_homebrew_packages() {
+  title "Installing Homebrew packages"
+  brew analytics off
+  brew update
+  brew bundle --file ./scripts/Brewfile --no-upgrade
+  brew cleanup
+}
 
-if ask "Configure git to ignore changes to *.local* files?"; then
-  title "⚙️ Configuring files with git assume-unchanged"
-  local_files=(
+# setup_iterm2() {
+#   is_mac || return 0
+#   [ -d "/Applications/iTerm.app" ] || return 0
+
+#   title "Setting up iTerm2 preferences"
+#   defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.config/iterm2"
+#   defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+#   defaults write com.googlecode.iterm2.plist "NoSyncNeverRemindPrefsChangesLostForFile_selection" -int 2
+# }
+
+backup_conflicting_files() {
+  title "Backing up files that may conflict with stow"
+  local files=(
+    .bash_profile
+    .bashrc
+    .zshrc
+    .gitconfig
+    .config/gh/config.yml
+  )
+  for file in "${files[@]}"; do
+    local target="$HOME/$file"
+    if [ -f "$target" ] && [ ! -L "$target" ]; then
+      mv "$target" "${target}.old"
+      echo "  moved $file → ${file}.old"
+    fi
+  done
+}
+
+run_stow() {
+  title "Creating symlinks via stow"
+
+  stow --restow stow
+
+  for dir in */; do
+    local pkg="${dir%/}"
+    if ! stow --restow "$pkg" 2>&1; then
+      warn "stow failed for '$pkg' (non-fatal)"
+    fi
+  done
+}
+
+setup_fish_shell() {
+  local fish_path
+  fish_path=$(command -v fish 2>/dev/null) || return 0
+
+  [ "$SHELL" != "$fish_path" ] || return 0
+
+  if ! ask "Change login shell to fish ($fish_path)?"; then
+    return 0
+  fi
+
+  if ! grep -qxF "$fish_path" /etc/shells; then
+    echo "$fish_path" | sudo tee -a /etc/shells >/dev/null
+  fi
+
+  sudo chsh -s "$fish_path" "$USER"
+  echo "Login shell changed to fish — restart your terminal to use it."
+}
+
+install_mise_tools() {
+  command -v mise &>/dev/null || return 0
+
+  title "Installing mise tools"
+
+  if is_linux && [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+
+  if ! mise install; then
+    warn "mise install failed (non-fatal). Run 'mise install' manually later."
+  fi
+}
+
+configure_git_local_files() {
+  if ! ask "Configure git to ignore changes to *.local* files?"; then
+    return 0
+  fi
+
+  title "Marking .local files as assume-unchanged"
+  local files=(
     "zsh/.zshrc.local"
     "git/.gitconfig.local"
     "claude/.claude/.mcp.local.json"
@@ -83,20 +193,53 @@ if ask "Configure git to ignore changes to *.local* files?"; then
     "mise/.config/mise/config.local.toml"
   )
 
-  for file in "${local_files[@]}"; do
+  for file in "${files[@]}"; do
     if [ -f "$file" ]; then
       git update-index --assume-unchanged "$file" 2>/dev/null || true
-      echo "✓ Set assume-unchanged for $file"
-      # Note: Undo with --no-assume-unchanged
-      # List files marked as assume-unchanged
-      # git ls-files -v | grep '^h'
+      echo "  ✓ $file"
     fi
   done
-fi
+}
 
-# GitHub CLI: Authenticate with your GitHub account if the user is not logged in
-if command -v gh &>/dev/null && ! gh auth status &>/dev/null; then
-  echo "[GitHub CLI] You are not logged into any GitHub hosts. To log in, run: ${bold}gh auth login${reset}"
-fi
+remind_gh_auth() {
+  command -v gh &>/dev/null || return 0
+  if ! gh auth status &>/dev/null; then
+    echo
+    echo "[GitHub CLI] Not logged in. Run: ${bold}gh auth login${reset}"
+  fi
+}
 
-# source ~/.zshrc
+# MARK: Main
+
+main() {
+  if is_mac; then
+    title "🍎 Setting up Mac"
+  elif is_linux; then
+    title "🐧 Setting up Linux"
+  else
+    warn "Unsupported OS: $(uname -s)"
+    exit 1
+  fi
+
+  sudo -v
+
+  ensure_directories
+  install_apt_prerequisites
+  install_homebrew
+  install_homebrew_packages
+  # setup_iterm2
+  backup_conflicting_files
+  run_stow
+  setup_fish_shell
+  install_mise_tools
+  configure_git_local_files
+  remind_gh_auth
+
+  local login_shell
+  login_shell=$(getent passwd "$USER" | cut -d: -f7)
+  echo
+  title "Done! Launching ${login_shell##*/}"
+  exec "$login_shell" -li
+}
+
+main "$@"

@@ -8,7 +8,6 @@ brew 'stow' # Symlink manager
 brew 'zoxide' # switch between most used directories
 brew 'htop' # prettier top
 brew 'jq' # JSON processor
-# brew 'n' # Node version manager
 brew 'gh' # GitHub CLI
 brew 'fzf' # Fuzzy finder
 brew 'fd' # Better find
@@ -16,30 +15,27 @@ brew 'rg' # Better grep
 brew 'yazi' # Terminal file manager
 brew 'git-delta' # Better git diffs
 brew 'mise' # Manage dev tooling, .env, task runner.
-# brew 'gdrive' # Google Drive
-# brew 'mas' # Mac App Store installer cli
 
-# Applications
-cask 'spotify'
-cask 'firefox'
-cask 'docker'
-cask 'iterm2'
-cask 'wezterm'
-cask 'visual-studio-code'
-cask 'obsidian' # Note-taking app
+if OS.mac?
+  cask 'firefox'
+  cask 'docker-desktop'
+  cask 'wezterm'
+  cask 'visual-studio-code'
+  cask 'obsidian'
 
-# Fonts
-cask 'font-0xproto-nerd-font'
-cask 'font-cascadia-code'
-cask 'font-commit-mono'
-cask 'font-commit-mono-nerd-font'
-cask 'font-fira-code'
-cask 'font-fira-code-nerd-font'
-cask 'font-hack'
-cask 'font-hack-nerd-font'
-cask 'font-monaspace'
-cask 'font-monaspace-nerd-font'
-cask 'font-meslo-for-powerlevel10k'
+  # Fonts
+  cask 'font-0xproto-nerd-font'
+  cask 'font-cascadia-code'
+  cask 'font-commit-mono'
+  cask 'font-commit-mono-nerd-font'
+  cask 'font-fira-code'
+  cask 'font-fira-code-nerd-font'
+  cask 'font-hack'
+  cask 'font-hack-nerd-font'
+  cask 'font-monaspace'
+  cask 'font-monaspace-nerd-font'
+  cask 'font-meslo-for-powerlevel10k'
 
-# Mac App Store
-# mas 'appname', id: 123456789
+  # Mac App Store
+  # mas 'appname', id: 123456789
+end
