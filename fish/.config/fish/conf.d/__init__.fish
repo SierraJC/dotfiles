@@ -32,9 +32,9 @@ set -q MISE_FISH_AUTO_ACTIVATE || set -gx MISE_FISH_AUTO_ACTIVATE 0
 set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
 set -q HOMEBREW_NO_AUTO_UPDATE || set -gx HOMEBREW_NO_AUTO_UPDATE 1
 if test -e /opt/homebrew/bin/brew
-    __cache_and_source brew_init.fish "/opt/homebrew/bin/brew shellenv"
+    __cache_and_source brew_init.fish "/opt/homebrew/bin/brew shellenv fish"
 else if test -e /home/linuxbrew/.linuxbrew/bin/brew
-    __cache_and_source brew_init.fish "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
+    __cache_and_source brew_init.fish "/home/linuxbrew/.linuxbrew/bin/brew shellenv fish"
 end
 
 # Add fish completions

@@ -8,9 +8,9 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 if [[ -f /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/opt/homebrew/bin/brew shellenv bash)"
 elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 fi
 
 if command -v mise >/dev/null 2>&1; then
