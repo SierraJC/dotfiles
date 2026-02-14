@@ -49,8 +49,9 @@
       "gh issue view *": "allow",
       "gh pr view *": "allow",
       "git log *": "allow",
-      "git status": "allow",
+      "git status *": "allow",
       "git diff *": "allow",
+      "bash -n *": "allow",
       // Deny
       "rm -rf /": "deny",
     },

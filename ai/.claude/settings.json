@@ -27,7 +27,8 @@
       "Bash(gh issue list:*)",
       "Bash(gh project view:*)",
       "Bash(gh project item-list:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(bash -n:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
