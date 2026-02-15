@@ -1,9 +1,10 @@
-# $schema: https://mise.jdx.dev/schema/mise.json
+#:schema https://mise.jdx.dev/schema/mise.json
 
 [tools]
-bun = "latest"
 starship = "latest"
-
 claude-code = "latest"
 codex = "latest"
 opencode = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["go", "node"]

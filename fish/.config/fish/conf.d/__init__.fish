@@ -42,7 +42,15 @@ if test -e "$HOMEBREW_PREFIX/share/fish/completions"
     set --append fish_complete_path "$HOMEBREW_PREFIX/share/fish/completions"
 end
 
-# Add bin directories to path.
+if type -q mise
+    if status is-interactive
+        __cache_and_source mise_init.fish "mise activate fish"
+    else
+        __cache_and_source mise_shims_init.fish "mise activate fish --shims"
+    end
+end
+
+# Add user bin directories to path.
 set -g prepath (
     path filter \
         $HOME/bin \
@@ -50,7 +58,3 @@ set -g prepath (
         $HOME/go/bin
 )
 fish_add_path --prepend --move $prepath
-
-if type -q mise
-    __cache_and_source mise_shims_init.fish "mise activate fish --shims"
-end

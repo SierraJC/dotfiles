@@ -17,6 +17,7 @@
     "mdns": false,
     // "cors": ["http://localhost:4096"]
   },
+  "disabled_providers": ["cloudflare-ai-gateway"],
   "small_model": "github-copilot/gpt-5-mini",
   "agent": {
     "plan": {

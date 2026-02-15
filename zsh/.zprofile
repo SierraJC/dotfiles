@@ -8,6 +8,6 @@ elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
 fi
 
-if command -v mise >/dev/null 2>&1; then
+if [[ ! -o interactive ]] && command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh --shims)"
 fi
