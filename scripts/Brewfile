@@ -16,6 +16,7 @@ brew 'yazi' # Terminal file manager
 brew 'git-delta' # Better git diffs
 brew 'mise' # Manage dev tooling, .env, task runner.
 brew 'bat' # Better cat
+brew 'lsd' # Better ls
 
 if OS.mac?
   cask 'firefox'

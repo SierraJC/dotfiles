@@ -8,6 +8,7 @@ abbr please ' please'
 abbr pls ' please'
 
 # Navigation
+alias ls='lsd'
 abbr -- - 'cd -'
 abbr .. 'cd ..'
 abbr ... 'cd ../..'

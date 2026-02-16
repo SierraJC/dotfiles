@@ -18,6 +18,7 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 alias q='exit'
+alias ls='lsd'
 
 source $HOME/.zshrc.local
 
