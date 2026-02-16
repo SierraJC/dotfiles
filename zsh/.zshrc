@@ -1,6 +1,11 @@
 # ? Executed for interactive shells
 [[ ! -o interactive ]] && return
 
+# Execute fish if it's not the parent process.
+# if ! ps -p $PPID | grep -q fish; then
+#   exec fish
+# fi
+
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi

@@ -4,6 +4,11 @@ set -gx COLORTERM truecolor
 
 if status is-interactive
     set -g fish_key_bindings fish_vi_key_bindings
+    set fish_vi_force_cursor 1
+    set fish_cursor_default block
+    set fish_cursor_insert line
+    set fish_cursor_replace_one underscore
+
     # fish_config theme choose Catppuccin --color-theme=dark
 
     if type -q starship
@@ -24,4 +29,6 @@ if status is-interactive
 
     # Bind Ctrl+G to forget last command from history
     bind -M insert \cg forget
+    # Replace !! by the previous command.
+    bind -M insert ! bind_bang
 end
