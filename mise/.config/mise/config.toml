@@ -1,7 +1,6 @@
 #:schema https://mise.jdx.dev/schema/mise.json
 
 [tools]
-starship = "latest"
 claude-code = "latest"
 codex = "latest"
 opencode = "latest"

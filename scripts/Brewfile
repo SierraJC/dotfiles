@@ -1,22 +1,25 @@
 # Taps
 
-# Binaries
+# CLI tools
+brew 'mise' # Manage dev tooling, .env, task runner.
 brew 'git' # Version control
+brew 'gh' # GitHub CLI
 brew 'zsh' # Z shell
 brew 'fish' # Friendly Interactive SHell (non-POSIX alternative to bash/zsh)
 brew 'stow' # Symlink manager
-brew 'zoxide' # switch between most used directories
+brew 'starship' # Cross-shell prompt
 brew 'htop' # prettier top
 brew 'jq' # JSON processor
-brew 'gh' # GitHub CLI
 brew 'fzf' # Fuzzy finder
+brew 'zoxide' # Better cd
 brew 'fd' # Better find
 brew 'rg' # Better grep
-brew 'yazi' # Terminal file manager
-brew 'git-delta' # Better git diffs
-brew 'mise' # Manage dev tooling, .env, task runner.
 brew 'bat' # Better cat
 brew 'lsd' # Better ls
+brew 'git-delta' # Better git diffs
+brew 'yazi' # TUI file explorer
+brew 'lazygit' #  TUI for git
+brew 'lazydocker' # TUI for docker
 
 if OS.mac?
   cask 'firefox'
