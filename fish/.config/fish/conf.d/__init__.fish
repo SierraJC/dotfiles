@@ -14,13 +14,7 @@ end
 # set fish_function_path (path resolve $__fish_config_dir/functions/*/) $fish_function_path
 
 # Setup caching.
-if not set -q __fish_cache_dir
-    if set -q XDG_CACHE_HOME
-        set -g __fish_cache_dir $XDG_CACHE_HOME/fish
-    else
-        set -g __fish_cache_dir $HOME/.cache/fish
-    end
-end
+set -q __fish_cache_dir; or set -g __fish_cache_dir $XDG_CACHE_HOME/fish
 test -d $__fish_cache_dir; or mkdir -p $__fish_cache_dir
 
 # Remove expired cache files.
@@ -42,14 +36,6 @@ if test -e "$HOMEBREW_PREFIX/share/fish/completions"
     set --append fish_complete_path "$HOMEBREW_PREFIX/share/fish/completions"
 end
 
-if type -q mise
-    if status is-interactive
-        __cache_and_source mise_init.fish "mise activate fish"
-    else
-        __cache_and_source mise_shims_init.fish "mise activate fish --shims"
-    end
-end
-
 # Add user bin directories to path.
 set -g prepath (
     path filter \
@@ -58,3 +44,15 @@ set -g prepath (
         $HOME/go/bin
 )
 fish_add_path --prepend --move $prepath
+
+if type -q mise
+    if status is-interactive
+        # Defer until the first prompt to speed up startup time.
+        function __mise_deferred --on-event fish_prompt
+            functions -e __mise_deferred
+            __cache_and_source mise_init.fish "mise activate fish"
+        end
+    else
+        __cache_and_source mise_shims_init.fish "mise activate fish --shims"
+    end
+end
