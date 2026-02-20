@@ -30,4 +30,5 @@ function magic-enter-bindings --description "Bind magic-enter for default and vi
         bind -M default \r magic-enter
     end
 end
-magic-enter-bindings
+
+status is-interactive; and magic-enter-bindings

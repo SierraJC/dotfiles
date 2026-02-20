@@ -1,14 +1,29 @@
+status is-interactive; or return
+
 abbr cls " clear && printf '\e[3J'"
 abbr c " clear && printf '\e[3J'"
 abbr q " exit"
+
+alias rm='rm -I'
 
 abbr apt 'sudo apt'
 abbr apt-get 'sudo apt-get'
 abbr please ' please'
 abbr pls ' please'
 
+if type -q bat
+    alias bat='bat --theme-dark "Catppuccin Mocha" --theme-light "Catppuccin Latte"'
+    alias cat='bat --style=plain --paging=never'
+    alias less='bat'
+end
+
 # Navigation
-alias ls='lsd'
+alias ls='ls --color=auto'
+if type -q lsd
+    alias ls='lsd --group-directories-first'
+    alias tree='lsd --tree'
+end
+
 abbr -- - 'cd -'
 abbr .. 'cd ..'
 abbr ... 'cd ../..'

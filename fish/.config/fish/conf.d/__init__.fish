@@ -1,6 +1,6 @@
 # __init__: Anything that needs to run first.
 
-# Set XDG basedirs.
+# Set XDG base dirs.
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 set -q XDG_CONFIG_HOME; or set -gx XDG_CONFIG_HOME $HOME/.config
 set -q XDG_DATA_HOME; or set -gx XDG_DATA_HOME $HOME/.local/share
@@ -9,6 +9,13 @@ set -q XDG_CACHE_HOME; or set -gx XDG_CACHE_HOME $HOME/.cache
 for xdgdir in (path filter -vd $XDG_CONFIG_HOME $XDG_DATA_HOME $XDG_STATE_HOME $XDG_CACHE_HOME)
     mkdir -p $xdgdir
 end
+
+set -gx DOTFILES $HOME/.dotfiles
+set -q PAGER; or set -gx PAGER less
+set -q VISUAL; or set -gx VISUAL code
+set -q EDITOR; or set -gx EDITOR nvim
+set -q BROWSER; or set -gx BROWSER open
+set -q FISH_THEME; or set -g FISH_THEME "catppuccin-mocha"
 
 # Allow subdirs for functions.
 # set fish_function_path (path resolve $__fish_config_dir/functions/*/) $fish_function_path
@@ -20,11 +27,11 @@ test -d $__fish_cache_dir; or mkdir -p $__fish_cache_dir
 # Remove expired cache files.
 find $__fish_cache_dir -maxdepth 1 -name '*.fish' -type f -mmin +1200 -delete
 
-set -q MISE_FISH_AUTO_ACTIVATE || set -gx MISE_FISH_AUTO_ACTIVATE 0
+set -q MISE_FISH_AUTO_ACTIVATE; or set -Ux MISE_FISH_AUTO_ACTIVATE 0
 
 # Setup homebrew
-set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
-set -q HOMEBREW_NO_AUTO_UPDATE || set -gx HOMEBREW_NO_AUTO_UPDATE 1
+set -q HOMEBREW_NO_ANALYTICS; or set -gx HOMEBREW_NO_ANALYTICS 1
+set -q HOMEBREW_NO_AUTO_UPDATE; or set -gx HOMEBREW_NO_AUTO_UPDATE 1
 if test -e /opt/homebrew/bin/brew
     __cache_and_source brew_init.fish "/opt/homebrew/bin/brew shellenv fish"
 else if test -e /home/linuxbrew/.linuxbrew/bin/brew

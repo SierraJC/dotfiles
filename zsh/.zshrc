@@ -23,7 +23,7 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 alias q='exit'
-alias ls='lsd'
+alias cls='clear && printf "\e[3J"'
 
 source $HOME/.zshrc.local
 
