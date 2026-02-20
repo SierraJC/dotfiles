@@ -1,0 +1,136 @@
+(defcfg
+  process-unmapped-keys yes   ;; required to make non mapped keys behave nicely with remapped ones
+  concurrent-tap-hold yes     ;; required to allow for combos and tap-hold-release features to coexist
+  delegate-to-first-layer yes ;; defaults to source, but this will default transparent keys (_) to first custom layer
+  log-layer-changes no        ;; no logging
+  chords-v2-min-idle 350      ;; same as require-prior-idle from ZMK but only for for combos
+  macos-dev-names-exclude (   ;; excludes my custom keyboards from macOS karabiner/kanata manipulation as they already have their own customized keymaps that mirrors this one with their advantages
+    "Lily58"
+  )
+)
+
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lalt lmet           spc            rmet ralt rctl
+)
+
+(defvar
+  tapping-term 300
+  quick-tap-ms 200
+  require-prior-idle 250
+  chord-timeout 50
+
+  left-side-keys (q w e r t z x c v b)
+  right-side-keys (y u i o p n m , . /)
+  home-row-left-keys (a s d f g)
+  home-row-right-keys (h j k l ;)
+)
+
+(defvirtualkeys
+  to-base (layer-switch main)
+)
+
+(deftemplate lhrm (tappingterm tap-key hold-key)
+  (tap-hold-release-tap-keys-release
+    $quick-tap-ms $tappingterm
+    (multi $tap-key @tap) $hold-key
+    $left-side-keys $home-row-left-keys)
+)
+
+(deftemplate rhrm (tappingterm tap-key hold-key)
+  (tap-hold-release-tap-keys-release
+    $quick-tap-ms $tappingterm
+    (multi $tap-key @tap) $hold-key
+    $right-side-keys $home-row-right-keys)
+)
+
+(defalias
+  tap (multi
+    (layer-switch nomods)
+    (on-idle $require-prior-idle tap-virtualkey to-base)
+  )
+
+  lmeh (multi lctl lsft lalt)
+  rmeh (multi rctl rsft ralt)
+
+  a (t! lhrm $tapping-term a lctl)
+  s (t! lhrm $tapping-term s lalt)
+  d (t! lhrm $tapping-term d lsft)
+  f (t! lhrm $tapping-term f lmet)
+  g (t! lhrm $tapping-term g @lmeh)
+
+  h (t! rhrm $tapping-term h @rmeh)
+  j (t! rhrm $tapping-term j rmet)
+  k (t! rhrm $tapping-term k rsft)
+  l (t! rhrm $tapping-term l ralt)
+  ; (t! rhrm $tapping-term ; rctl)
+
+  cpy M-c
+  cut M-x
+  pst M-v
+  und M-z
+  esc Escape
+)
+
+(defchords actions $chord-timeout
+  (j  ) @j
+  (  k) @k
+  (x  ) x
+  (z  ) z
+  (  c) c
+  (  v) v
+  (x c) @cpy
+  (x v) @cut
+  (c v) @pst
+  (z x) @und
+  (j k) @esc
+)
+
+(deflayermap (main)
+  caps XX
+
+  ;; left home row mods
+  a @a
+  s @s
+  d @d
+  f @f
+  g @g
+
+  ;; right home row mods (j, k routed through chords for j+k=Escape)
+  h @h
+  j (chord actions j)
+  k (chord actions k)
+  l @l
+  ; @;
+
+  ;; bottom-row chord participants
+  x (chord actions x)
+  c (chord actions c)
+  v (chord actions v)
+  z (chord actions z)
+)
+
+(deflayermap (nomods)
+  ;; plain letters — no modifiers during fast typing
+  a a
+  s s
+  f f
+  g g
+  h h
+  l l
+  ; ;
+  j j
+
+  ;; shift stays active for capitalization
+  d @d
+  k @k
+
+  ;; bottom-row chords stay active (copy/paste/undo)
+  x (chord actions x)
+  c (chord actions c)
+  v (chord actions v)
+  z (chord actions z)
+)
