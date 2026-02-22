@@ -23,9 +23,10 @@ local function debug_log_print()
 end
 debug_log_print()
 
-config.default_prog = constants.is_macos
-		and { '/opt/homebrew/bin/fish', '--login', '--interactive' }
-		or { "pwsh.exe", "-NoLogo" }
+config.default_prog =
+		constants.is_macos and { '/opt/homebrew/bin/fish', '--login', '--interactive' }
+		or constants.is_windows and { "pwsh.exe", "-NoLogo" }
+		or nil
 
 config.max_fps = constants.is_macos and 120 or 144
 config.prefer_egl = true
