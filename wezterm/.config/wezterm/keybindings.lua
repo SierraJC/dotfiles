@@ -39,7 +39,7 @@ function M.apply_to_config(config)
 		{ key = 'P',         mods = 'CTRL|SHIFT', action = act.ActivateCommandPalette }, -- Similar to IDEs
 		{ key = 'Enter',     mods = 'SHIFT',      action = act.QuickSelect },
 		{ key = 'Enter',     mods = 'ALT',        action = act.Nop },
-		{ key = 't',         mods = 'CTRL',       action = act.ShowLauncherArgs { flags = 'FUZZY|DOMAINS' } },
+		-- { key = 't',         mods = 'CTRL',       action = act.ShowLauncherArgs { flags = 'FUZZY|DOMAINS' } },
 		{ key = 'Backspace', mods = 'CTRL',       action = act.SendKey { key = 'w', mods = 'CTRL' } }, -- Delete word backward
 		{ key = 'Delete',    mods = 'CTRL',       action = act.SendKey { key = 'd', mods = 'ALT' } }, -- Delete word forward
 		{ key = 'w',         mods = 'CTRL',       action = act.CloseCurrentPane { confirm = true } },
@@ -51,7 +51,7 @@ function M.apply_to_config(config)
 			key = 'a',
 			mods = 'LEADER',
 			action = wezterm.action_callback(function(window, pane)
-				local domain_name = constants.is_macos and 'unix' or 'SSHMUX:work'
+				local domain_name = constants.is_macos and 'unix' or 'work'
 				local current_domain = pane:get_domain_name()
 				-- Skip if already attached to the target domain
 				if current_domain == domain_name then
@@ -147,6 +147,12 @@ function M.apply_to_config(config)
 			event = { Up = { streak = 1, button = 'Left' } },
 			mods = 'CTRL',
 			action = wezterm.action.OpenLinkAtMouseCursor,
+		},
+		-- Quadruple-click to select all output from a command
+		{
+			event = { Down = { streak = 4, button = 'Left' } },
+			mods = 'NONE',
+			action = act.SelectTextAtMouseCursor 'SemanticZone',
 		},
 	}
 

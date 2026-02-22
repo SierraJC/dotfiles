@@ -1,9 +1,11 @@
 local wezterm = require 'wezterm'
+local constants = require 'constants'
 
 local M = {}
 
 function M.setup(config)
   local KEY_TABLE_LABELS = {
+    leader_mode = "LEADER",
     resize_pane = "RESIZE",
     move_tab = "MOVE",
   }
@@ -57,7 +59,7 @@ function M.setup(config)
       },
       tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
       tabline_x = { 'ram', 'cpu' },
-      tabline_y = { 'battery' },
+      tabline_y = constants.is_macos and { 'battery' } or {},
       tabline_z = { { 'domain', icons_only = true } },
     },
     extensions = {},

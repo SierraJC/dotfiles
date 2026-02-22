@@ -1,7 +1,8 @@
 # ? Executed for interactive shells
-
-# guard against non-interactive shells
 [[ $- != *i* ]] && return
+
+_wezterm_sh="${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/shell-integration.sh"
+[[ -f "$_wezterm_sh" ]] && source "$_wezterm_sh"
 
 # Drop into fish if:
 # - The parent process isn't fish.

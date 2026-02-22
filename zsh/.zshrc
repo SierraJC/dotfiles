@@ -1,6 +1,9 @@
 # ? Executed for interactive shells
 [[ ! -o interactive ]] && return
 
+local _wezterm_sh="${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/shell-integration.sh"
+[[ -f "$_wezterm_sh" ]] && source "$_wezterm_sh"
+
 # Execute fish if it's not the parent process.
 # if ! ps -p $PPID | grep -q fish; then
 #   exec fish
