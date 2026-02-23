@@ -55,3 +55,14 @@ fi
 alias q='exit'
 alias cls='clear && printf "\e[3J"'
 alias c='cls'
+
+# Don't put duplicate entries or entries starting with space in the history.
+HISTCONTROL=ignorespace:ignoredups:erasedups
+HISTSIZE=10000
+HISTFILESIZE=$HISTSIZE
+
+# bash-preexec (bundled with wezterm's shell integration) forcibly strips
+# ignorespace from HISTCONTROL so it can read space-prefixed commands via
+# `history 1` for its preexec hooks. This is an unresolved upstream issue:
+# https://github.com/rcaloras/bash-preexec/issues/115
+__bp_adjust_histcontrol() { :; }

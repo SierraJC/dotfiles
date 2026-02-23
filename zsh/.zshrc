@@ -7,6 +7,9 @@ local _wezterm_sh="${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/shell-integration.s
 # Auto-cd if the command is a directory and can't be executed as a normal command.
 setopt auto_cd
 
+# Don't put duplicate entries or entries starting with space in the history.
+setopt histignorespace histignoredups
+
 # When deleting with <C-w>, delete file names at a time.
 WORDCHARS=${WORDCHARS/\/}
 
