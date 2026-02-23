@@ -54,5 +54,5 @@ abbr lg lazygit
 abbr mcd mkcd
 
 # Claude CLI with better global mcp json
-set -l claude_params "--mcp-config=$HOME/.claude/.mcp.json --mcp-config=$HOME/.claude/.mcp.local.json"
+set -l claude_params '--mcp-config=$CLAUDE_CONFIG_DIR/.mcp.json --mcp-config=$CLAUDE_CONFIG_DIR/.mcp.local.json'
 alias claude "claude $claude_params"

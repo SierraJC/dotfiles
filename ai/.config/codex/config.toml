@@ -34,3 +34,6 @@ url = "https://mcp.grep.app"
 [mcp_servers.context7]
 enabled = true
 url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"

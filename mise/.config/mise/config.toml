@@ -5,5 +5,10 @@ claude-code = "latest"
 codex = "latest"
 opencode = "latest"
 
+[env]
+CLAUDE_CONFIG_DIR = "{{ env.XDG_CONFIG_HOME }}/claude"
+CODEX_HOME = "{{ env.XDG_CONFIG_HOME }}/codex"
+# OPENCODE_CONFIG_DIR = "{{ env.XDG_CONFIG_HOME }}/opencode"
+
 [settings]
 idiomatic_version_file_enable_tools = ["go", "node"]

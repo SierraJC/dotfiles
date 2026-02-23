@@ -54,6 +54,7 @@
   "outputStyle": "Explanatory",
   "alwaysThinkingEnabled": true,
   "autoUpdatesChannel": "latest",
+  "autoMemoryEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754027380709
   }

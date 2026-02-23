@@ -21,20 +21,19 @@
   "small_model": "github-copilot/gpt-5-mini",
   "agent": {
     "plan": {
-      "model": "openai/gpt-5.3-codex",
-      "variant": "xhigh",
+      "model": "openai/gpt-5.2",
+      "variant": "high",
     },
     "build": {
-      "model": "github-copilot/claude-sonnet-4.5",
-      "variant": "thinking",
-    },
-    "explore": {
-      "model": "opencode/claude-haiku-4-5",
-      "variant": "thinking",
+      "model": "openai/gpt-5.3-codex",
+      "variant": "xhigh",
     },
   },
   "experimental": { "batch_tool": true },
   "permission": {
+    "skill": {
+      "*": "ask",
+    },
     "bash": {
       // Default
       "*": "ask",
@@ -83,6 +82,11 @@
       "enabled": true,
       "type": "remote",
       "url": "https://mcp.grep.app",
+    },
+    "figma": {
+      "enabled": true,
+      "type": "remote",
+      "url": "http://127.0.0.1:3845/mcp",
     },
   },
 }
