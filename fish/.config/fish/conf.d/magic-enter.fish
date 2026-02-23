@@ -1,9 +1,9 @@
 function magic-enter-cmd --description "Command to run when pressing enter on an empty prompt"
     set --local cmd ls -laF
 
-    if command git rev-parse --is-inside-work-tree &>/dev/null
-        set cmd git status -sb
-    end
+    # if command git rev-parse --is-inside-work-tree &>/dev/null
+    #     set cmd git status -sb
+    # end
 
     # Output as tokens (one per line) so command substitution returns a proper argv list.
     printf '%s\n' $cmd

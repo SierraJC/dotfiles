@@ -38,7 +38,9 @@ ensure_directories() {
     "$HOME/.config/gh"
     "$HOME/.config/iterm2"
     "$HOME/.config/tmux"
-    "$HOME/.claude"
+    "$HOME/.config/claude"
+    "$HOME/.config/codex"
+    "$HOME/.config/opencode"
     "$HOME/.local/share"
     "$HOME/.local/bin"
   )
@@ -121,6 +123,7 @@ backup_conflicting_files() {
   local files=(
     .bash_profile
     .bashrc
+    .zprofile
     .zshrc
     .gitconfig
     .config/gh/config.yml
@@ -188,7 +191,7 @@ configure_git_local_files() {
   local files=(
     "zsh/.zshrc.local"
     "git/.gitconfig.local"
-    "claude/.claude/.mcp.local.json"
+    "ai/.config/claude/.mcp.local.json"
     "fish/.config/fish/conf.d/abbr.local.fish"
     "mise/.config/mise/config.local.toml"
   )
