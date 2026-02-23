@@ -1,20 +1,40 @@
-# ? Executed for interactive shells
-[[ $- != *i* ]] && return
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
 
-_wezterm_sh="${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/shell-integration.sh"
-[[ -f "$_wezterm_sh" ]] && source "$_wezterm_sh"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv bash)"
+elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+fi
+
+if [[ $- != *i* ]]; then
+  # ? Non-interactive shell
+  command -v mise >/dev/null 2>&1 && \
+    eval "$(mise activate bash --shims)"
+  return
+fi
+
+# ? Interactive shell
 
 # Drop into fish if:
 # - The parent process isn't fish.
 # - Not running a command like `bash -c 'echo foo'`.
-# if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} && ${SHLVL} == 1 ]]; then
-#     # Let fish whether it's a login shell.
-#     if ! shopt -q login_shell; then
-#         exec fish --login
-#     else
-#         exec fish
-#     fi
-# fi
+# - The shell level is 1, which means it's the initial login shell.
+if command -v fish >/dev/null 2>&1 && [[ $(basename "$(ps -p $PPID -o comm=)") != "fish" && -z ${BASH_EXECUTION_STRING} && ${SHLVL} == 1 ]]; then
+    # Let fish whether it's a login shell.
+    if ! shopt -q login_shell; then
+        exec fish --login
+    else
+        exec fish
+    fi
+fi
+
+_wezterm_sh="${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/shell-integration.sh"
+[[ -f "$_wezterm_sh" ]] && source "$_wezterm_sh"
 
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate bash)"
@@ -31,3 +51,7 @@ fi
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init --cmd cd bash)"
 fi
+
+alias q='exit'
+alias cls='clear && printf "\e[3J"'
+alias c='cls'
