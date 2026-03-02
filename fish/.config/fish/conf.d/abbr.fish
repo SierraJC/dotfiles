@@ -39,8 +39,9 @@ abbr dotfiles 'cd ~/.dotfiles'
 # Edit git config
 abbr gcg 'git config --edit --global'
 abbr gcl 'git config --edit --local'
-abbr gcgl 'git config --edit --file $HOME/.gitconfig.local'
+abbr gcgl 'git config --edit --file ~/.gitconfig.local'
 abbr gig '$EDITOR ~/.gitignore_global'
+abbr gil '$EDITOR (git rev-parse --show-toplevel)/.git/info/exclude'
 # Git
 abbr -a --set-cursor='%' -- gcm 'git commit -m "%"'
 

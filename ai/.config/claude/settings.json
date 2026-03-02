@@ -17,6 +17,9 @@
       "Bash(rg:*)",
       "Bash(grep:*)",
       "Bash(ls:*)",
+      "Bash(bash -n:*)",
+      "Bash(sed -n:*)",
+      "Bash(wc -l:*)",
       "WebSearch",
       "mcp__context7__get-library-docs",
       "mcp__context7__resolve-library-id",
@@ -28,8 +31,7 @@
       "Bash(gh issue list:*)",
       "Bash(gh project view:*)",
       "Bash(gh project item-list:*)",
-      "Bash(git log:*)",
-      "Bash(bash -n:*)"
+      "Bash(git log:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -42,7 +44,11 @@
       "Read(.env)",
       "Read(*/.env)",
       "Read(**/.env)",
-      "Read(**/keyfile.json)"
+      "Read(**/keyfile.json)",
+      "Bash(* .env*)",
+      "Bash(* .env)",
+      "Bash(* */.env*)",
+      "Bash(* */.env)"
     ],
     "defaultMode": "default",
     "additionalDirectories": ["/tmp/"]

@@ -187,7 +187,7 @@ configure_git_local_files() {
     return 0
   fi
 
-  title "Marking .local files as assume-unchanged"
+  title "Marking .local files as skip-worktree"
   local files=(
     "zsh/.zshrc.local"
     "git/.gitconfig.local"
@@ -198,7 +198,7 @@ configure_git_local_files() {
 
   for file in "${files[@]}"; do
     if [ -f "$file" ]; then
-      git update-index --assume-unchanged "$file" 2>/dev/null || true
+      git update-index --skip-worktree "$file" 2>/dev/null || true
       echo "  ✓ $file"
     fi
   done
