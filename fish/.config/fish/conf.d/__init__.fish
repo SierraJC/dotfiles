@@ -1,5 +1,8 @@
 # __init__: Anything that needs to run first.
 
+set -q LANG; or set -gx LANG en_AU.UTF-8
+set -q LC_ALL; or set -gx LC_ALL en_AU.UTF-8
+
 # Set XDG base dirs.
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 set -q XDG_CONFIG_HOME; or set -gx XDG_CONFIG_HOME $HOME/.config
@@ -48,6 +51,7 @@ set -g prepath (
     path filter \
         $HOME/bin \
         $HOME/.local/bin \
+        $XDG_DATA_HOME/bin \
         $HOME/go/bin
 )
 fish_add_path --prepend --move $prepath
