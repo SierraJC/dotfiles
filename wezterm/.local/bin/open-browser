@@ -1,0 +1,40 @@
+#!/bin/sh
+# open-browser — Opens a URL in the local browser, even over SSH.
+#
+# When running inside an SSH session, sends the URL to WezTerm via
+# OSC 1337 SetUserVar, which triggers the 'user-var-changed' Lua event.
+# WezTerm then opens the URL in the local machine's default browser.
+#
+# When not in SSH, falls through to the native open/xdg-open command.
+#
+# Supports tmux passthrough when $TMUX is set.
+#
+# Usage:
+#   open-browser <url>
+#   BROWSER=open-browser some-tool-that-opens-urls
+
+url="$1"
+
+if [ -z "$url" ]; then
+  echo "Usage: open-browser <url>" >&2
+  exit 1
+fi
+
+if [ -n "$SSH_CONNECTION" ]; then
+  encoded=$(printf '%s' "$url" | base64)
+
+  if [ -n "${TMUX-}" ]; then
+    printf "\033Ptmux;\033\033]1337;SetUserVar=%s=%s\007\033\\" "open_url" "$encoded"
+  else
+    printf "\033]1337;SetUserVar=%s=%s\007" "open_url" "$encoded"
+  fi
+else
+  if command -v open >/dev/null 2>&1; then
+    open "$url"
+  elif command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$url"
+  else
+    echo "No browser opener found (open/xdg-open)" >&2
+    exit 1
+  fi
+fi

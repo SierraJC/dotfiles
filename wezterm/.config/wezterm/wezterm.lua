@@ -135,6 +135,9 @@ config.window_padding = { left = 5, right = 5, top = 5, bottom = 5 }
 
 wezterm.on('user-var-changed', function(window, pane, name, value)
 	wezterm.log_info('var', name, value)
+	if name == 'open_url' then
+		wezterm.open_with(value)
+	end
 end)
 
 return config

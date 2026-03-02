@@ -18,3 +18,7 @@ export SHELL_SESSIONS_DISABLE=1
 
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
+
+if [[ -n "$SSH_CONNECTION" ]]; then
+  export BROWSER="open-browser"
+fi

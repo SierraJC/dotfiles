@@ -11,6 +11,9 @@ export PATH="$HOME/bin:$HOME/.local/bin:$XDG_DATA_HOME/bin:$PATH"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 
+if [ -n "$SSH_CONNECTION" ]; then
+  export BROWSER="open-browser"
+fi
 
 if [[ -f /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv bash)"

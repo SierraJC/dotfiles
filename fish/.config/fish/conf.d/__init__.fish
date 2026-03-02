@@ -17,8 +17,12 @@ set -gx DOTFILES $HOME/.dotfiles
 set -q PAGER; or set -gx PAGER less
 set -q VISUAL; or set -gx VISUAL code
 set -q EDITOR; or set -gx EDITOR nvim
-set -q BROWSER; or set -gx BROWSER open
+
 set -q FISH_THEME; or set -g FISH_THEME "catppuccin-mocha"
+
+if not set -q BROWSER; and set -q SSH_CONNECTION
+    set -gx BROWSER open-browser
+end
 
 # Allow subdirs for functions.
 # set fish_function_path (path resolve $__fish_config_dir/functions/*/) $fish_function_path
