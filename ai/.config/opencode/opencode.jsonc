@@ -35,7 +35,6 @@
       "model": "github-copilot/gemini-3.1-pro-preview",
     },
   },
-  "experimental": { "batch_tool": true },
   "permission": {
     "skill": {
       "*": "ask",
@@ -70,6 +69,8 @@
       "git status *": "allow",
       "git diff *": "allow",
       "git show *": "allow",
+      "mise help *": "allow",
+      "mise registry *": "allow",
       "docker status *": "allow",
       "docker ps *": "allow",
       // Deny

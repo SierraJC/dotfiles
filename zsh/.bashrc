@@ -6,7 +6,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-export PATH="$HOME/bin:$HOME/.local/bin:$XDG_DATA_HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 export EDITOR="nvim"
 export VISUAL="$EDITOR"

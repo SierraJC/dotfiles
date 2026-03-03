@@ -55,7 +55,6 @@ set -g prepath (
     path filter \
         $HOME/bin \
         $HOME/.local/bin \
-        $XDG_DATA_HOME/bin \
         $HOME/go/bin
 )
 fish_add_path --prepend --move $prepath
