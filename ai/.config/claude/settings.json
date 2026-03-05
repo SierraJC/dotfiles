@@ -51,7 +51,9 @@
       "Bash(* */.env)"
     ],
     "defaultMode": "default",
-    "additionalDirectories": ["/tmp/"]
+    "additionalDirectories": [
+      "/tmp/"
+    ]
   },
   "hooks": {},
   "enabledPlugins": {
@@ -63,5 +65,6 @@
   "autoMemoryEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754027380709
-  }
+  },
+  "effortLevel": "high"
 }

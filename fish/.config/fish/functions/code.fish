@@ -12,7 +12,7 @@ function code \
     end
 
     # If code is already in PATH, use it directly
-    if type -q code
+    if type -q code; and test "$TERM_PROGRAM" = "vscode"
         command code $argv
         return
     end

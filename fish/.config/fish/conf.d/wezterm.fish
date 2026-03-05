@@ -6,8 +6,8 @@
 #
 # Ported from: https://github.com/wezterm/wezterm/blob/main/assets/shell-integration/wezterm.sh
 
-if set -q "$WEZTERM_SHELL_SKIP_ALL" = 1; or set -q "$WEZTERM_SHELL_SKIP_USER_VARS" = 1
-    exit
+if ! status is-interactive; or set -q WEZTERM_SHELL_SKIP_ALL; or set -q WEZTERM_SHELL_SKIP_USER_VARS
+    return
 end
 
 # Static vars — these don't change within a session, so set them once.
